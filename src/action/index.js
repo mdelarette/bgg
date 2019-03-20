@@ -47,6 +47,8 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
   var games;
   var uniques = [];
 
+  // TODO check how we can get rid of "Access-Control-Allow-Origin" at https://www.html5rocks.com/en/tutorials/cors/
+
   try {
     const response = await axios.get(`https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`);
     parseString(response.data, function(err, _games) {
