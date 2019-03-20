@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "7f037192fcdef96884010177e90e8c5f",
-    "url": "/bgg/static/media/icons-16.7f037192.eot"
+    "revision": "a82b41082b04f774d82317dff6874d14",
+    "url": "/bgg/static/media/icons-16.a82b4108.ttf"
   },
   {
     "revision": "bf96eaad38bca59054af",
@@ -20,12 +20,16 @@ self.__precacheManifest = [
     "url": "/bgg/static/js/2.8a2dcc56.chunk.js"
   },
   {
-    "revision": "422aba8639312ac889d34200226a5c4e",
-    "url": "/bgg/static/media/icons-16.422aba86.woff"
+    "revision": "7f037192fcdef96884010177e90e8c5f",
+    "url": "/bgg/static/media/icons-16.7f037192.eot"
   },
   {
     "revision": "bf96eaad38bca59054af",
     "url": "/bgg/static/js/main.26c629b6.chunk.js"
+  },
+  {
+    "revision": "422aba8639312ac889d34200226a5c4e",
+    "url": "/bgg/static/media/icons-16.422aba86.woff"
   },
   {
     "revision": "f1bd87971a332ecb21b4ac1d19537fa3",
@@ -34,10 +38,6 @@ self.__precacheManifest = [
   {
     "revision": "52f2f35bf3a635ca696e95cc33cf12fa",
     "url": "/bgg/static/media/icons-20.52f2f35b.woff"
-  },
-  {
-    "revision": "a82b41082b04f774d82317dff6874d14",
-    "url": "/bgg/static/media/icons-16.a82b4108.ttf"
   },
   {
     "revision": "233241febee4b200472b",
