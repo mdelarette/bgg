@@ -4,7 +4,6 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import mainReducer from "../reducers/";
-// import authReducer from "./modules/auth";
 
 // This
 const persistConfig = {
@@ -15,7 +14,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   bgg: mainReducer
-  // counter: counterReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
