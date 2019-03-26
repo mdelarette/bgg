@@ -28,14 +28,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div style={{ margin: 16 }}>
+        <div className="AppElem">
           <Button intent="primary" text="Add player" onClick={this.addPlayer} style={{ padding: 16, margin: 16 }} />
           <Players />
         </div>
 
-        <Game style={{ margin: 16 }} />
+        <div className="AppElem">
+          <Game />
+        </div>
 
-        <Games style={{ margin: 16 }} />
+        <div className="AppElem">
+          <Games className="AppElem" />
+        </div>
       </div>
     );
   }

@@ -16,14 +16,14 @@ const Game = props => {
 
   if (!game) {
     return (
-      <Card style={{ margin: 16 }}>
+      <Card>
         <h3 className="bp3-heading">no game :(</h3>
       </Card>
     );
   }
 
   return (
-    <Card style={{ margin: 16 }}>
+    <Card>
       <h1 className="bp3-heading">{game.name}</h1>
       <h2 className="bp3-heading">{`min: ${game.min} | max: ${game.max}`}</h2>
     </Card>
