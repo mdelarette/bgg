@@ -5,13 +5,11 @@ import Player from "./Player";
 
 const Players = props => {
   return (
-    <React.Fragment>
-      <div>
-        {props.players.map((player, index) => (
-          <Player key={player.id} player={player} />
-        ))}
-      </div>
-    </React.Fragment>
+    <div className="w3-border w3-border-black">
+      {props.players.map((player, index) => (
+        <Player key={player.id} player={player} />
+      ))}
+    </div>
   );
 };
 

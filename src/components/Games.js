@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { Card, HTMLTable } from "@blueprintjs/core";
+import { HTMLTable } from "@blueprintjs/core";
 
 Games.propTypes = {
   games: PropTypes.arrayOf(PropTypes.object).isRequired
@@ -10,7 +10,7 @@ Games.propTypes = {
 
 function Games({ games }) {
   return (
-    <Card style={{ margin: 16 }}>
+    <div className="w3-container w3-sand w3-margin-bottom">
       <HTMLTable>
         <thead>
           <tr>
@@ -29,7 +29,7 @@ function Games({ games }) {
           ))}
         </tbody>
       </HTMLTable>
-    </Card>
+    </div>
   );
 }
 

@@ -4,8 +4,6 @@ import uuid from "uuid/v4";
 
 import "./App.css";
 
-import { Button } from "@blueprintjs/core";
-
 import Players from "./components/Players";
 import Games from "./components/Games";
 import Game from "./components/Game";
@@ -27,18 +25,21 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="AppElem">
-          <Button intent="primary" text="Add player" onClick={this.addPlayer} style={{ padding: 16, margin: 16 }} />
+      <div className="w3-row w3-light-blue">
+        <div className="w3-third w3-container">
+          <button className="w3-margin w3-button w3-teal" onClick={this.addPlayer}>
+            Add player
+          </button>
+
           <Players />
         </div>
 
-        <div className="AppElem">
+        <div className="w3-third w3-container">
           <Game />
         </div>
 
-        <div className="AppElem">
-          <Games className="AppElem" />
+        <div className="w3-third w3-container">
+          <Games />
         </div>
       </div>
     );

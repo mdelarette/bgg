@@ -1,8 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { Card } from "@blueprintjs/core";
-
 const selectGame = (games, nbPlayers) => {
   var filteredGames = games.filter(x => x.min <= nbPlayers && nbPlayers <= x.max);
   return filteredGames.length === 0 ? undefined : filteredGames[0];
@@ -16,17 +14,17 @@ const Game = props => {
 
   if (!game) {
     return (
-      <Card>
-        <h3 className="bp3-heading">no game :(</h3>
-      </Card>
+      <div className="w3-margin w3-card w3-yellow">
+        <h3>no game :(</h3>
+      </div>
     );
   }
 
   return (
-    <Card>
-      <h1 className="bp3-heading">{game.name}</h1>
-      <h2 className="bp3-heading">{`min: ${game.min} | max: ${game.max}`}</h2>
-    </Card>
+    <div className="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+      <h1>{game.name}</h1>
+      <h2>{`min: ${game.min} | max: ${game.max}`}</h2>
+    </div>
   );
 };
 
