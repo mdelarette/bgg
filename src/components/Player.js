@@ -16,6 +16,9 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
     setEditMode(false);
   };
 
+  // Check here
+  // https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_lists_avatar
+
   return (
     <div className="w3-margin-bottom">
       {editMode && (
