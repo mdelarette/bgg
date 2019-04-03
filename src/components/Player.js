@@ -3,8 +3,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { Button, ButtonGroup } from "@blueprintjs/core";
-
 import { updatePlayerToStore, deletePlayerFromStore, fetchPlayerGames } from "../action";
 
 const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlayerGames }) => {
@@ -28,11 +26,13 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
           <div>
             BGG: <input type="text" name="bggName" value={bggName} onChange={e => setBggName(e.target.value)} />
           </div>
-          <div>
-            <ButtonGroup>
-              <Button intent="primary" text="Valid" onClick={valid} />
-              <Button intent="none" text="Cancel" onClick={() => setEditMode(false)} />
-            </ButtonGroup>
+          <div class="w3-bar">
+            <button class="w3-button w3-blue" onClick={valid}>
+              Valid
+            </button>
+            <button class="w3-button w3-light-grey" onClick={() => setEditMode(false)}>
+              Cancel
+            </button>
           </div>
         </div>
       )}
@@ -41,12 +41,17 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
         <div>
           <p>{player.name}</p>
           <p>{player.bggName}</p>
-          <div>
-            <ButtonGroup>
-              <Button intent="primary" text="Edit" onClick={() => setEditMode(true)} />
-              <Button intent="danger" text="Remove" onClick={() => deletePlayerFromStore(player.id)} />
-              <Button intent="none" text="Fetch" onClick={() => fetchPlayerGames(player)} disabled={!player.bggName} />
-            </ButtonGroup>
+
+          <div class="w3-bar">
+            <button class="w3-button w3-blue" onClick={() => setEditMode(true)}>
+              Edit
+            </button>
+            <button class="w3-button w3-red" onClick={() => deletePlayerFromStore(player.id)}>
+              Remove
+            </button>
+            <button class="w3-button w3-light-grey" onClick={() => fetchPlayerGames(player)} disabled={!player.bggName}>
+              Fetch
+            </button>
           </div>
         </div>
       )}

@@ -2,18 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { HTMLTable } from "@blueprintjs/core";
-
 Games.propTypes = {
   games: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 function Games({ games }) {
   return (
-    <div className="w3-container w3-sand w3-margin-bottom">
-      <HTMLTable>
+    <div className="w3-white w3-margin-top w3-margin-bottom">
+      <table className="w3-table w3-striped w3-bordered w3-hoverable">
         <thead>
-          <tr>
+          <tr className="w3-teal">
             <th>name</th>
             <th>min</th>
             <th>max</th>
@@ -28,7 +26,7 @@ function Games({ games }) {
             </tr>
           ))}
         </tbody>
-      </HTMLTable>
+      </table>
     </div>
   );
 }

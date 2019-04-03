@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import uuid from "uuid/v4";
 
-import "./App.css";
-
 import Players from "./components/Players";
 import Games from "./components/Games";
 import Game from "./components/Game";
 
 import { addPlayerToStore } from "./action";
+
+import { get_gravatar } from "./utils/Gravatar";
 
 class App extends Component {
   addPlayer = () => {
@@ -27,15 +27,19 @@ class App extends Component {
     return (
       <div className="w3-row w3-light-blue">
         <div className="w3-third w3-container">
-          <button className="w3-margin w3-button w3-teal" onClick={this.addPlayer}>
+          <Game />
+        </div>
+        <img alt="gravatar" src={get_gravatar("braTac@free.fr ", 32)} />
+
+        <div className="w3-third w3-container">
+          <button
+            className="w3-button w3-block w3-ripple w3-teal w3-round-xxlarge w3-xlarge w3-margin-top w3-margin-bottom"
+            onClick={this.addPlayer}
+          >
             Add player
           </button>
 
           <Players />
-        </div>
-
-        <div className="w3-third w3-container">
-          <Game />
         </div>
 
         <div className="w3-third w3-container">
