@@ -10,16 +10,37 @@ import { addPlayerToStore } from "./action";
 
 class App extends Component {
   addPlayer = () => {
-    let newPlayer = {
-      id: uuid(),
-      name: "rename me",
-      bggName: "",
-      age: 18,
-      color: "blue",
-      fetched: false,
-      email: ""
-    };
-    this.props.addPlayerToStore(newPlayer);
+    let testNewPlayer = {};
+
+    fetch("https://randomuser.me/api/")
+      .then(results => results.json())
+      .then(data => {
+        testNewPlayer = data.results[0];
+        console.log("addPlayer testNewPlayer", JSON.stringify(testNewPlayer, null, 2));
+
+        let newPlayer = {
+          id: testNewPlayer.login.uuid,
+          name: testNewPlayer.name.first,
+          bggName: "",
+          age: testNewPlayer.dob.age,
+          color: "blue",
+          fetched: false,
+          email: "",
+          thumbnail: testNewPlayer.picture.thumbnail
+        };
+        this.props.addPlayerToStore(newPlayer);
+      });
+
+    // let newPlayer = {
+    //   id: uuid(),
+    //   name: "rename me",
+    //   bggName: "",
+    //   age: 18,
+    //   color: "blue",
+    //   fetched: false,
+    //   email: ""
+    // };
+    // this.props.addPlayerToStore(newPlayer);
   };
 
   render() {

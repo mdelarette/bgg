@@ -27,6 +27,7 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
   const [bggName, setBggName] = React.useState(player.bggName);
   const [age, setAge] = React.useState(player.age);
   const [email, setEmail] = React.useState(player.email);
+  const [thumbnail, setThumbnail] = React.useState(player.thumbnail);
 
   const gravatar = React.useMemo(() => (email ? get_gravatar(email, 32) : null), [email]);
 
@@ -76,6 +77,7 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
       {!editMode && (
         <div>
           {gravatar && <img alt="gravatar" src={gravatar} />}
+          {!gravatar && thumbnail && <img alt="thumbnail" src={thumbnail} />}
           <p>{player.name}</p>
           <p>{player.bggName}</p>
 
