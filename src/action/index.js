@@ -22,14 +22,13 @@ export const deletePlayerFromStore = playerId => {
 };
 
 export const UPDATE_PLAYER = "UPDATE_PLAYER";
-export const updatePlayerToStore = (playerId, name, bggName) => {
-  console.log("updatePlayerToStore", playerId, name, bggName);
+export const updatePlayerToStore = (playerId, playerData) => {
+  console.log("updatePlayerToStore", playerId, JSON.stringify(playerData, null, 2));
   return {
     type: UPDATE_PLAYER,
     payload: {
       playerId,
-      name,
-      bggName
+      playerData
     }
   };
 };

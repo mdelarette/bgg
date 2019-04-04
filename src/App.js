@@ -8,8 +8,6 @@ import Game from "./components/Game";
 
 import { addPlayerToStore } from "./action";
 
-import { get_gravatar } from "./utils/Gravatar";
-
 class App extends Component {
   addPlayer = () => {
     let newPlayer = {
@@ -18,7 +16,8 @@ class App extends Component {
       bggName: "",
       age: 18,
       color: "blue",
-      fetched: false
+      fetched: false,
+      email: ""
     };
     this.props.addPlayerToStore(newPlayer);
   };
@@ -29,7 +28,6 @@ class App extends Component {
         <div className="w3-third w3-container">
           <Game />
         </div>
-        <img alt="gravatar" src={get_gravatar("braTac@free.fr ", 32)} />
 
         <div className="w3-third w3-container">
           <button

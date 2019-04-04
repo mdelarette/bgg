@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
     case UPDATE_PLAYER:
       return produce(state, draft => {
         draft.players = draft.players.map(x =>
-          x.id !== action.payload.playerId ? x : { ...x, name: action.payload.name, bggName: action.payload.bggName }
+          x.id !== action.payload.playerId ? x : { ...x, ...action.payload.playerData }
         );
       });
 

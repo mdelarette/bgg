@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 
 import { updatePlayerToStore, deletePlayerFromStore, fetchPlayerGames } from "../action";
 
+import { get_gravatar } from "../utils/Gravatar";
+
 // const [user, setUser] = React.useState(null);
 
 // React.useEffect(() => {
@@ -23,10 +25,13 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
   const [editMode, setEditMode] = React.useState(false);
   const [name, setName] = React.useState(player.name);
   const [bggName, setBggName] = React.useState(player.bggName);
-  // const [age, setAge] = React.useState(player.age);
+  const [age, setAge] = React.useState(player.age);
+  const [email, setEmail] = React.useState(player.email);
+
+  const gravatar = React.useMemo(() => (email ? get_gravatar(email, 32) : null), [email]);
 
   const valid = () => {
-    updatePlayerToStore(player.id, name, bggName);
+    updatePlayerToStore(player.id, { name, bggName, age });
     setEditMode(false);
   };
 
@@ -43,6 +48,12 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
 
             <label>BGG</label>
             <input type="text" name="bggName" value={bggName} onChange={e => setBggName(e.target.value)} />
+
+            <label>Email</label>
+            <input type="text" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+
+            <label>Age</label>
+            <input type="number" name="age" value={age} onChange={e => setAge(e.target.value)} />
           </form>
 
           <div>
@@ -64,6 +75,7 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
 
       {!editMode && (
         <div>
+          {gravatar && <img alt="gravatar" src={gravatar} />}
           <p>{player.name}</p>
           <p>{player.bggName}</p>
 
