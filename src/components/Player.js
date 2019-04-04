@@ -5,6 +5,20 @@ import { connect } from "react-redux";
 
 import { updatePlayerToStore, deletePlayerFromStore, fetchPlayerGames } from "../action";
 
+// const [user, setUser] = React.useState(null);
+
+// React.useEffect(() => {
+//   fetch('https://randomuser.me/api/')
+//     .then(results => results.json())
+//     .then(data => {
+//       setUser(data.results[0]);
+//     });
+// }, []); // Pass empty array to only run once on mount.
+
+// return <div>
+//   {user ? user.name.first : 'Loading...'}
+// </div>;
+
 const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlayerGames }) => {
   const [editMode, setEditMode] = React.useState(false);
   const [name, setName] = React.useState(player.name);
@@ -23,6 +37,14 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
     <div className="w3-margin-bottom">
       {editMode && (
         <div>
+          <form class="w3-container">
+            <label>Name</label>
+            <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} />
+
+            <label>BGG</label>
+            <input type="text" name="bggName" value={bggName} onChange={e => setBggName(e.target.value)} />
+          </form>
+
           <div>
             Name: <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} />
           </div>
