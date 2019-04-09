@@ -212,5 +212,5 @@ export function get_gravatar(email, size) {
 
   size = size || 80;
 
-  return "http://www.gravatar.com/avatar/" + MD5(email.trim().toLowerCase()) + ".jpg?s=" + size;
+  return "http://www.gravatar.com/avatar/" + MD5(email.trim().toLowerCase()) + ".jpg?d=identicon&s=" + size;
 }

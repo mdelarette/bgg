@@ -7,20 +7,6 @@ import { updatePlayerToStore, deletePlayerFromStore, fetchPlayerGames } from "..
 
 import { get_gravatar } from "../utils/Gravatar";
 
-// const [user, setUser] = React.useState(null);
-
-// React.useEffect(() => {
-//   fetch('https://randomuser.me/api/')
-//     .then(results => results.json())
-//     .then(data => {
-//       setUser(data.results[0]);
-//     });
-// }, []); // Pass empty array to only run once on mount.
-
-// return <div>
-//   {user ? user.name.first : 'Loading...'}
-// </div>;
-
 const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlayerGames }) => {
   const [editMode, setEditMode] = React.useState(false);
   const [name, setName] = React.useState(player.name);
@@ -32,7 +18,7 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
   const gravatar = React.useMemo(() => (email ? get_gravatar(email, 32) : null), [email]);
 
   const valid = () => {
-    updatePlayerToStore(player.id, { name, bggName, age });
+    updatePlayerToStore(player.id, { name, bggName, age, email });
     setEditMode(false);
   };
 
@@ -42,56 +28,73 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
   return (
     <div className="w3-margin-bottom">
       {editMode && (
-        <div>
-          <form class="w3-container">
-            <label>Name</label>
-            <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} />
+        <React.Fragment>
+          <div className="w3-container w3-orange">
+            <p>
+              <label>Name</label>
+              <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} />
+            </p>
 
-            <label>BGG</label>
-            <input type="text" name="bggName" value={bggName} onChange={e => setBggName(e.target.value)} />
+            <p>
+              <label>BGG</label>
+              <input type="text" name="bggName" value={bggName} onChange={e => setBggName(e.target.value)} />
+            </p>
 
-            <label>Email</label>
-            <input type="text" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+            <p>
+              <label>Email</label>
+              <input type="text" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+            </p>
 
-            <label>Age</label>
-            <input type="number" name="age" value={age} onChange={e => setAge(e.target.value)} />
-          </form>
-
-          <div>
-            Name: <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} />
+            <p>
+              <label>Age</label>
+              <input type="number" name="age" value={age} onChange={e => setAge(e.target.value)} />
+            </p>
           </div>
-          <div>
-            BGG: <input type="text" name="bggName" value={bggName} onChange={e => setBggName(e.target.value)} />
-          </div>
-          <div class="w3-bar">
-            <button class="w3-button w3-blue" onClick={valid}>
+
+          <div className="w3-bar">
+            <button className="w3-button w3-blue" onClick={valid}>
               Valid
             </button>
-            <button class="w3-button w3-light-grey" onClick={() => setEditMode(false)}>
+            <button className="w3-button w3-light-grey" onClick={() => setEditMode(false)}>
               Cancel
             </button>
           </div>
-        </div>
+        </React.Fragment>
       )}
 
       {!editMode && (
         <div>
-          {gravatar && <img alt="gravatar" src={gravatar} />}
-          {!gravatar && thumbnail && <img alt="thumbnail" src={thumbnail} />}
-          <p>{player.name}</p>
-          <p>{player.bggName}</p>
+          <div className="w3-bar w3-white" onClick={() => setEditMode(true)}>
+            <span
+              onClick={() => deletePlayerFromStore(player.id)}
+              className="w3-bar-item w3-button w3-white w3-xlarge w3-right"
+            >
+              ×
+            </span>
 
-          <div class="w3-bar">
-            <button class="w3-button w3-blue" onClick={() => setEditMode(true)}>
-              Edit
-            </button>
-            <button class="w3-button w3-red" onClick={() => deletePlayerFromStore(player.id)}>
-              Remove
-            </button>
-            <button class="w3-button w3-light-grey" onClick={() => fetchPlayerGames(player)} disabled={!player.bggName}>
-              Fetch
-            </button>
+            {gravatar && (
+              <img alt="gravatar" src={gravatar} className="w3-bar-item w3-circle" style={{ width: "85px" }} />
+            )}
+            {!gravatar && thumbnail && (
+              <img alt="thumbnail" src={thumbnail} className="w3-bar-item w3-circle" style={{ width: "85px" }} />
+            )}
+
+            <div className="w3-bar-item">
+              <p>
+                <span className="w3-large">{player.name} </span>
+                <span className="w3-badge w3-green">{player.age}</span>
+              </p>
+              <p>{player.bggName ? player.bggName : "\u00A0"}</p>
+            </div>
           </div>
+
+          {player.bggName && (
+            <div className="w3-bar">
+              <button className="w3-button w3-light-grey" onClick={() => fetchPlayerGames(player)}>
+                Fetch
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
