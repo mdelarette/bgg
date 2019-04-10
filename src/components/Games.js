@@ -11,16 +11,16 @@ function Games({ games }) {
     <div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div className="w3-teal" style={{ display: "flex", flexDirection: "row" }}>
-          <p>name</p>
-          <p>min</p>
-          <p>max</p>
+          <p style={{ flex: "1 1 80%" }}>name</p>
+          <p style={{ flex: "0 1 10%" }}>min</p>
+          <p style={{ flex: "0 1 10%" }}>max</p>
         </div>
 
         {games.map(game => (
           <div key={game.id} style={{ display: "flex", flexDirection: "row" }}>
-            <p>{game.name}</p>
-            <p>{game.min}</p>
-            <p>{game.max}</p>
+            <p style={{ flex: "1 1 80%" }}>game.name</p>
+            <p style={{ flex: "0 1 10%" }}>game.min</p>
+            <p style={{ flex: "0 1 10%" }}>game.max</p>
           </div>
         ))}
       </div>
