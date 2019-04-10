@@ -5,7 +5,7 @@ import Player from "./Player";
 
 const Players = props => {
   return (
-    <div className="w3-border w3-border-black">
+    <div>
       {props.players.map((player, index) => (
         <Player key={player.id} player={player} />
       ))}

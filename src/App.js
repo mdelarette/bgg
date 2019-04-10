@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import Players from "./components/Players";
 import Games from "./components/Games";
+import BestGame from "./components/BestGame";
 import Game from "./components/Game";
 
 import { addPlayerToStore } from "./action";
@@ -38,7 +39,7 @@ class App extends Component {
     return (
       <div className="w3-row w3-light-blue">
         <div className={"w3-third w3-container " + ninjaMode}>
-          <Game />
+          <BestGame />
         </div>
 
         <div className="w3-third w3-container">
@@ -53,6 +54,10 @@ class App extends Component {
         </div>
 
         <div className={"w3-third w3-container " + ninjaMode}>
+          <Game id={"42"} />
+        </div>
+
+        <div className={"w3-third" + ninjaMode}>
           <Games />
         </div>
       </div>

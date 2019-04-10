@@ -1,16 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const selectGame = (games, nbPlayers) => {
-  var filteredGames = games.filter(x => x.min <= nbPlayers && nbPlayers <= x.max);
-  return filteredGames.length === 0 ? undefined : filteredGames[0];
-};
-
-const Game = props => {
-  const game = React.useMemo(
-    () => selectGame(props.games, props.nbPlayers),
-    [props.nbPlayers, props.games.length] // update this hook only if nbPlayers changed
-  );
+const Game = ({ id, game }) => {
+  console.log("id", id);
+  console.log("game", game);
 
   if (!game) {
     return (
@@ -29,9 +22,10 @@ const Game = props => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  // console.log("ownProps.id", ownProps.id);
+  // console.log("state.bgg.games", JSON.stringify(state.bgg.games, null, 2));
   return {
-    games: state.bgg.games,
-    nbPlayers: state.bgg.players.length
+    game: state.bgg.games.find(x => x.id === ownProps.id)
   };
 };
 
