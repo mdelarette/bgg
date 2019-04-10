@@ -18,9 +18,9 @@ function Games({ games }) {
 
         {games.map(game => (
           <div key={game.id} style={{ display: "flex", flexDirection: "row" }}>
-            <p style={{ flex: "1 1 80%" }}>game.name</p>
-            <p style={{ flex: "0 1 10%" }}>game.min</p>
-            <p style={{ flex: "0 1 10%" }}>game.max</p>
+            <p style={{ flex: "1 1 80%" }}>{game.name}</p>
+            <p style={{ flex: "0 1 10%" }}>{game.min}</p>
+            <p style={{ flex: "0 1 10%" }}>{game.max}</p>
           </div>
         ))}
       </div>
