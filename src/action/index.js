@@ -37,7 +37,7 @@ export const updatePlayerToStore = (playerId, playerData) => {
 
 export const FETCH_PLAYER_GAMES = "FETCH_PLAYER_GAMES";
 
-const setPlayerGames = games => ({ type: "FETCH_PLAYER_GAMES", payload: games });
+const setPlayerGames = (playerId, games) => ({ type: "FETCH_PLAYER_GAMES", payload: { playerId, games } });
 
 export const fetchPlayerGames = player => async (dispatch, getState) => {
   // Appel à l'api
@@ -51,11 +51,15 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
   try {
     const response = await axios.get(`https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`);
     parseString(response.data, function(err, _games) {
-      games = _games.items.item.map(x => {
+      games = _games.items.item.map((x, index) => {
+        console.log(`_games.items.item[${index}]=`, x);
+
         return { id: x.$.objectid, name: x.name[0]._ };
       });
     });
     uniques = games.filter(uniqueId);
+
+    // TODO Remove games already known to limit the fetch !
 
     var ids = uniques.reduce((acc, game) => acc + `${game.id},`, "");
     ids = ids.slice(0, ids.length - 1);
@@ -63,10 +67,26 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
     const responseGame = await axios.get(`https://www.boardgamegeek.com/xmlapi2/thing?id=${ids}`);
     parseString(responseGame.data, function(err, _games) {
       //   console.log("_games=", _games);
-      console.log("_games.items=", _games.items);
+      // console.log("_games.items=", _games.items);
 
-      games = _games.items.item.map(x => {
-        return { id: x.$.id, name: x.name[0].$.value, min: x.minplayers[0].$.value, max: x.maxplayers[0].$.value };
+      // TODO check x.$.type === 'boardgameexpansion'
+
+      games = _games.items.item.map((x, index) => {
+        // if (index === 0) {
+        console.log(`_games.items.item[${index}]=`, x);
+        // }
+        return {
+          id: x.$.id,
+          name: x.name[0].$.value,
+          minage: x.minage[0].$.value,
+          min: x.minplayers[0].$.value,
+          max: x.maxplayers[0].$.value,
+          minplaytime: x.minplaytime[0].$.value,
+          maxplaytime: x.maxplaytime[0].$.value,
+          playingtime: x.playingtime[0].$.value,
+          thumbnail: x.thumbnail[0],
+          description: x.description[0]
+        };
       });
 
       //   game = _game.items.item[0];
@@ -79,7 +99,7 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
     console.error(error);
   }
 
-  dispatch(setPlayerGames(games));
+  dispatch(setPlayerGames(player.id, games));
 };
 
 function uniqueId(value, index, self) {

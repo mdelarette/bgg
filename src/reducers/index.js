@@ -4,13 +4,13 @@ import { ADD_PLAYER, DELETE_PLAYER, UPDATE_PLAYER, FETCH_PLAYER_GAMES } from "..
 
 const initialState = {
   players: [],
-
+  owners: {},
   games: []
 };
 
 export default (state = initialState, action) => {
   console.log("action.type=", action.type);
-  console.log("action.type=", action.payload);
+  console.log("action.payload=", action.payload);
 
   switch (action.type) {
     case ADD_PLAYER:
@@ -32,7 +32,9 @@ export default (state = initialState, action) => {
 
     case FETCH_PLAYER_GAMES:
       return produce(state, draft => {
-        draft.games = action.payload;
+        draft.games = action.payload.games;
+        // TODO Limit to game id
+        draft.owners[action.payload.playerId] = action.payload.games;
       });
 
     default:

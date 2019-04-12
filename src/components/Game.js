@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 const Game = ({ id, game }) => {
-  console.log("id", id);
-  console.log("game", game);
+  // console.log("id", id);
+  // console.log("game", game);
 
   if (!game) {
     return (
