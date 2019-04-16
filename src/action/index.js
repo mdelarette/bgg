@@ -85,7 +85,7 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
           maxplaytime: x.maxplaytime[0].$.value,
           playingtime: x.playingtime[0].$.value,
           thumbnail: x.thumbnail[0],
-          description: x.description[0]
+          description: x.description[0].replace(/&#10;/g, "\n")
         };
       });
 

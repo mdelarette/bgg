@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const Game = ({ id, game }) => {
@@ -17,6 +18,7 @@ const Game = ({ id, game }) => {
     <div className="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
       <h1>{game.name}</h1>
       <h2>{`min: ${game.min} | max: ${game.max}`}</h2>
+      <p>{game.description}</p>
     </div>
   );
 };
@@ -33,6 +35,10 @@ const mapStateToProps = (state, ownProps) => {
 //   fetchReclamation: id => dispatch(fetchReclamation(id)),
 //   initDetailsReclamation: () => dispatch(initDetailsReclamation())
 // });
+
+Game.propTypes = {
+  id: PropTypes.string.isRequired
+};
 
 export default connect(
   mapStateToProps,
