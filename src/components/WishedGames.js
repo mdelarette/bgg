@@ -25,7 +25,7 @@ const mapStateToProps = (state, ownProps) => {
   // TODO use a selector
 
   let gameIds = state.bgg.ownership.reduce((acc, o) => {
-    if (o.own !== "1") {
+    if (o.status.own !== "1") {
       acc.push(o.gameId);
     }
     return acc;

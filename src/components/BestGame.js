@@ -11,7 +11,7 @@ const selectGameId = (games, nbPlayers) => {
 const BestGame = props => {
   const gameId = React.useMemo(
     () => selectGameId(props.games, props.nbPlayers),
-    [props.nbPlayers, props.games.length] // update this hook only if nbPlayers changed
+    [props.nbPlayers, props.games] // update this hook only if nbPlayers changed or games have changed
   );
 
   if (!gameId) {
@@ -26,6 +26,15 @@ const BestGame = props => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  // TODO use a selector
+
+  // let gameIds = state.bgg.ownership.reduce((acc, o) => {
+  //   if (o.status.own === "1") {
+  //     acc.push(o.gameId);
+  //   }
+  //   return acc;
+  // }, []);
+
   return {
     games: state.bgg.games,
     nbPlayers: state.bgg.players.length

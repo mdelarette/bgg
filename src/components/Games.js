@@ -22,11 +22,16 @@ function Games({ gameIds }) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    gameIds: state.bgg.games.map(game => {
-      return game.id;
-    })
-  };
+  // TODO use a selector
+
+  let gameIds = state.bgg.ownership.reduce((acc, o) => {
+    if (o.status.own === "1") {
+      acc.push(o.gameId);
+    }
+    return acc;
+  }, []);
+
+  return { gameIds };
 };
 
 export default connect(
