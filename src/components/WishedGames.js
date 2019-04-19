@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { getWishedGameIds } from "../selectors";
 
 import GameRow from "../components/GameRow";
 
@@ -22,22 +23,7 @@ function WishedGames({ gameIds }) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // TODO use a selector
-
-  let gameIds = state.bgg.ownership.reduce((acc, o) => {
-    if (o.status.own !== "1") {
-      acc.push(o.gameId);
-    }
-    return acc;
-  }, []);
-
-  return { gameIds };
-
-  // return {
-  //   gameIds: state.bgg.games.map(game => {
-  //     return game.id;
-  //   })
-  // };
+  return { gameIds: getWishedGameIds(state) };
 };
 
 export default connect(

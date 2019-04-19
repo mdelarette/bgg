@@ -24,8 +24,8 @@ const Game = ({ id, game }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log("ownProps.id", ownProps.id);
-  // console.log("state.bgg.games", JSON.stringify(state.bgg.games, null, 2));
+  // TODO use selector
+
   return {
     game: state.bgg.games.find(x => x.id === ownProps.id)
   };
