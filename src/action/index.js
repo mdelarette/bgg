@@ -37,14 +37,14 @@ export const updatePlayerToStore = (playerId, playerData) => {
 
 export const FETCH_PLAYER_GAMES = "FETCH_PLAYER_GAMES";
 
-const setPlayerGames = (playerId, games) => ({ type: "FETCH_PLAYER_GAMES", payload: { playerId, games } });
+const setPlayerGames = (ownership, games) => ({ type: "FETCH_PLAYER_GAMES", payload: { ownership, games } });
 
 export const fetchPlayerGames = player => async (dispatch, getState) => {
   // Appel à l'api
   console.log("fetchPlayerGames", player.id, player.bggName);
 
   var games;
-  var uniques = [];
+  var ownership = [];
 
   // TODO check how we can get rid of "Access-Control-Allow-Origin" at https://www.html5rocks.com/en/tutorials/cors/
 
@@ -54,14 +54,23 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
       games = _games.items.item.map((x, index) => {
         console.log(`_games.items.item[${index}]=`, x);
 
-        return { id: x.$.objectid, name: x.name[0]._ };
+        let game = {
+          gameId: x.$.objectid,
+          playerId: player.id,
+          // name: x.name[0]._,
+          status: x.status[0].$
+        };
+
+        console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+
+        return game;
       });
     });
-    uniques = games.filter(uniqueId);
+    ownership = games.filter(uniqueId);
 
     // TODO Remove games already known to limit the fetch !
 
-    var ids = uniques.reduce((acc, game) => acc + `${game.id},`, "");
+    var ids = ownership.reduce((acc, game) => acc + `${game.gameId},`, "");
     ids = ids.slice(0, ids.length - 1);
 
     const responseGame = await axios.get(`https://www.boardgamegeek.com/xmlapi2/thing?id=${ids}`);
@@ -73,10 +82,12 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
 
       games = _games.items.item.map((x, index) => {
         // if (index === 0) {
-        console.log(`_games.items.item[${index}]=`, x);
+        // console.log(`_games.items.item[${index}]=`, x);
         // }
-        return {
+
+        let game = {
           id: x.$.id,
+          type: x.$.type,
           name: x.name[0].$.value,
           minage: x.minage[0].$.value,
           min: x.minplayers[0].$.value,
@@ -84,9 +95,32 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
           minplaytime: x.minplaytime[0].$.value,
           maxplaytime: x.maxplaytime[0].$.value,
           playingtime: x.playingtime[0].$.value,
-          thumbnail: x.thumbnail[0],
-          description: x.description[0].replace(/&#10;/g, "\n")
+          image: x.image[0],
+          thumbnail: x.thumbnail[0], // FIT IN 200x150
+          description: x.description[0]
+            .replace(/&apos;/g, "'")
+            .replace(/&quot;/g, '"')
+            .replace(/&gt;/g, ">")
+            .replace(/&lt;/g, "<")
+            .replace(/&amp;/g, "&")
+
+            .replace(/&eacute;/g, "é")
+
+            .replace(/&#10;/g, "\n")
         };
+
+        if (game.type === "boardgameexpansion") {
+          game.extends = x.link.reduce((accumulator, currentValue) => {
+            if (currentValue.$.type === "boardgameexpansion") {
+              accumulator.push(currentValue.$.id);
+            }
+            return accumulator;
+          }, []);
+        }
+
+        // console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+
+        return game;
       });
 
       //   game = _game.items.item[0];
@@ -99,9 +133,9 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
     console.error(error);
   }
 
-  dispatch(setPlayerGames(player.id, games));
+  dispatch(setPlayerGames(ownership, games));
 };
 
 function uniqueId(value, index, self) {
-  return self.slice(index + 1).findIndex((currentValue, i, r) => currentValue.id === value.id) === -1;
+  return self.slice(index + 1).findIndex((currentValue, i, r) => currentValue.gameId === value.gameId) === -1;
 }

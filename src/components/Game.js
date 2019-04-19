@@ -18,7 +18,7 @@ const Game = ({ id, game }) => {
     <div className="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
       <h1>{game.name}</h1>
       <h2>{`min: ${game.min} | max: ${game.max}`}</h2>
-      <p>{game.description}</p>
+      <p style={{ whiteSpace: "pre-line" }}>{game.description}</p>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { ADD_PLAYER, DELETE_PLAYER, UPDATE_PLAYER, FETCH_PLAYER_GAMES } from "..
 
 const initialState = {
   players: [],
-  owners: {},
+  ownership: [],
   games: []
 };
 
@@ -34,7 +34,9 @@ export default (state = initialState, action) => {
       return produce(state, draft => {
         draft.games = action.payload.games;
         // TODO Limit to game id
-        draft.owners[action.payload.playerId] = action.payload.games;
+        // draft.owners[action.payload.playerId] = action.payload.games;
+
+        draft.ownership = action.payload.ownership;
       });
 
     default:

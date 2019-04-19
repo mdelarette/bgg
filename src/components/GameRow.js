@@ -18,8 +18,8 @@ function GameRow({ game }) {
           <img
             alt="thumbnail"
             src={game.thumbnail}
-            className="w3-bar-item w3-circle"
-            style={{ width: "120px", height: "120px" }}
+            className="w3-bar-item w3-circle w3-small"
+            style={{ width: "80px", height: "80px" }}
           />
           <div className="w3-bar-item">
             <p>
@@ -28,7 +28,7 @@ function GameRow({ game }) {
           </div>
         </div>
 
-        <div className="w3-bar w3-white" p style={{ flex: "0 1 10%" }}>
+        <div className="w3-bar w3-white" style={{ flex: "0 1 10%" }}>
           {game.min}
         </div>
 
