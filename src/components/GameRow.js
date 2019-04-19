@@ -40,7 +40,26 @@ function GameRow({ game }) {
   );
 }
 
+// https://blog.isquaredsoftware.com/2017/12/idiomatic-redux-using-reselect-selectors/
+
+// const selectSomeData = state => state.someData;
+
+// const selectFilteredSortedTransformedData = createSelector(
+//     selectSomeData,
+//     (someData) => {
+//          const filteredData = expensiveFiltering(someData);
+//          const sortedData = expensiveSorting(filteredData);
+//          const transformedData = expensiveTransformation(sortedData);
+
+//          return transformedData;
+//     }
+// )
+
 const mapStateToProps = (state, ownProps) => {
+  // const transformedData = selectFilteredSortedTransformedData (state);
+
+  // return {data : transformedData};
+
   return {
     game: state.bgg.games.find(x => x.id === ownProps.id)
   };

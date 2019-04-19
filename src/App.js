@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import Players from "./components/Players";
 import Games from "./components/Games";
+import WishedGames from "./components/WishedGames";
 import BestGame from "./components/BestGame";
 import Game from "./components/Game";
 
@@ -63,6 +64,10 @@ class App extends Component {
 
         <div className={"w3-third" + ninjaMode}>
           <Games />
+        </div>
+
+        <div className={"w3-third" + ninjaMode}>
+          <WishedGames />
         </div>
       </div>
     );
