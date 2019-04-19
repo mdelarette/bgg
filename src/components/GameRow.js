@@ -19,7 +19,7 @@ function GameRow({ game }) {
             alt="thumbnail"
             src={game.thumbnail}
             className="w3-bar-item w3-circle w3-small"
-            style={{ width: "80px", height: "80px" }}
+            style={{ width: "100px", height: "75px" }}
           />
           <div className="w3-bar-item">
             <p>
