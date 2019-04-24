@@ -58,3 +58,10 @@ export const getOwnedGames = createSelector(
   ownedGamesSelector,
   games => games
 );
+
+const gameRowDataSelector = (state, props) => state.bgg.games.find(x => x.id === props.id);
+
+export const getGameRowData = createSelector(
+  gameRowDataSelector,
+  game => game
+);
