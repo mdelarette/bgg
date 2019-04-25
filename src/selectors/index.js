@@ -61,7 +61,20 @@ export const getOwnedGames = createSelector(
 
 const gameRowDataSelector = (state, props) => state.bgg.games.find(x => x.id === props.id);
 
+const extensionsSelector = (state, props) => {
+  return state.bgg.games
+    .filter(x => x.extends && x.extends.find(y => y === props.id) !== undefined)
+    .map(z => {
+      let extension = { id: z.id, name: z.name, min: z.min, max: z.max, thumbnail: z.thumbnail };
+      return extension;
+    });
+};
+
 export const getGameRowData = createSelector(
   gameRowDataSelector,
-  game => game
+  extensionsSelector,
+  (game, extensions) => {
+    var g = { name: game.name, thumbnail: game.thumbnail, min: game.min, max: game.max, extensions };
+    return g;
+  }
 );

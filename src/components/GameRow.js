@@ -14,29 +14,65 @@ function GameRow({ game }) {
 
   return (
     <React.Fragment>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <div className="w3-bar w3-white" style={{ flex: "1 1 80%" }} onClick={() => {}}>
+      <div className="w3-bar w3-white" style={{ display: "flex", flexDirection: "row" }}>
+        <div className="w3-bar-item w3-white" style={{ flex: "0 1 20%" }} onClick={() => {}}>
           <img
             alt="thumbnail"
             src={game.thumbnail}
-            className="w3-bar-item w3-circle w3-small"
+            className="w3-circle w3-bar-item"
             style={{ width: "100px", height: "75px" }}
           />
-          <div className="w3-bar-item">
-            <p>
-              <span className="w3-large">{game.name} </span>
-            </p>
-          </div>
         </div>
 
-        <div className="w3-bar w3-white" style={{ flex: "0 1 10%" }}>
+        <div className="w3-large w3-bar-item" style={{ flex: "1 1 60%" }}>
+          {game.name}
+        </div>
+
+        <div className="w3-bar-item w3-large" style={{ flex: "0 1 10%" }}>
           {game.min}
         </div>
 
-        <div className="w3-bar w3-white" style={{ flex: "0 1 10%" }}>
+        <div className="w3-bar-item w3-large" style={{ flex: "0 1 10%" }}>
           {game.max}
         </div>
       </div>
+
+      {game.extensions &&
+        game.extensions.map(extension => {
+          let elem = (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div className="w3-bar w3-white" style={{ flex: "1 1 80%" }} onClick={() => {}}>
+                <div className="w3-bar-item" style={{ width: "100px", height: "75px", textAlign: "right" }}>
+                  <img
+                    alt="thumbnail"
+                    src={extension.thumbnail}
+                    className="w3-circle"
+                    style={{ width: "50px", height: "37px", alignSelf: "center" }}
+                  />
+                </div>
+                <div className="w3-bar-item">
+                  <p>
+                    <span className="w3-small">{extension.name}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="w3-bar w3-white" style={{ flex: "0 1 10%" }}>
+                <p>
+                  <span className="w3-small">{extension.min}</span>
+                </p>
+              </div>
+
+              <div className="w3-bar w3-white" style={{ flex: "0 1 10%" }}>
+                <p>
+                  <span className="w3-small">{extension.max}</span>
+                </p>
+              </div>
+            </div>
+          );
+
+          return elem;
+        })}
     </React.Fragment>
   );
 }

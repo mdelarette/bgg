@@ -27,7 +27,7 @@ const mapStateToProps = (state, ownProps) => {
   // TODO use selector
 
   return {
-    game: state.bgg.games.find(x => x.id === ownProps.id)
+    game: state.bgg.games ? state.bgg.games.find(x => x.id === ownProps.id) : null
   };
 };
 
