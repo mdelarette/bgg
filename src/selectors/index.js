@@ -23,7 +23,11 @@ import { createSelector } from "reselect";
 const gameIdsSelector = state =>
   state.bgg.ownership.reduce((acc, o) => {
     if (o.status.own === "1") {
-      acc.push(o.gameId);
+      // On exclu les extensions
+      let game = state.bgg.games.find(x => x.id === o.gameId);
+      if (game && !game.extends) {
+        acc.push(o.gameId);
+      }
     }
     return acc;
   }, []);
