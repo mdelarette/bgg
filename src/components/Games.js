@@ -8,10 +8,18 @@ function Games({ gameIds }) {
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div className="w3-teal" style={{ display: "flex", flexDirection: "row" }}>
-          <p style={{ flex: "1 1 80%" }}>name</p>
-          <p style={{ flex: "0 1 10%" }}>min</p>
-          <p style={{ flex: "0 1 10%" }}>max</p>
+        <div className="w3-bar w3-teal" style={{ display: "flex", flexDirection: "row" }}>
+          <div className="w3-padding-small w3-large" style={{ flex: "1 1 auto" }}>
+            name
+          </div>
+
+          <div className="w3-padding-small w3-large w3-center" style={{ flex: "0 1 55px" }}>
+            min
+          </div>
+
+          <div className="w3-padding-small w3-large w3-center" style={{ flex: "0 1 55px" }}>
+            max
+          </div>
         </div>
 
         {gameIds.map(id => (

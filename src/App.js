@@ -39,10 +39,6 @@ class App extends Component {
   render() {
     return (
       <div className="w3-row w3-light-blue">
-        <p className="w3-hide-medium w3-hide-large">small</p>
-        <p className="w3-hide-small w3-hide-large">medium</p>
-        <p className="w3-hide-small w3-hide-medium">large</p>
-
         <div className={"w3-third w3-container " + ninjaMode}>
           <BestGame />
         </div>
@@ -58,7 +54,7 @@ class App extends Component {
           <Players />
         </div>
 
-        <div className={"w3-third w3-container " + ninjaMode}>
+        <div className={"w3-third w3-container w3-hide" + ninjaMode}>
           <Game id={"42"} />
         </div>
 
