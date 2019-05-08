@@ -33,9 +33,9 @@ function GameRow({ game }) {
       </div>
 
       {game.extensions &&
-        game.extensions.map(extension => {
+        game.extensions.map((extension,index) => {
           let elem = (
-            <div className="w3-bar w3-white" style={{ display: "flex", flexDirection: "row", minHeight: "75px" }}>
+            <div key={index} className="w3-bar w3-white" style={{ display: "flex", flexDirection: "row", minHeight: "75px" }}>
               <div className="w3-padding-small" style={{ flex: "0 1 116px" }} onClick={() => {}}>
                 {/* <i class="fas fa-caret-right" /> */}
 
@@ -47,7 +47,7 @@ function GameRow({ game }) {
                 />
               </div>
               <div className="                 w3-large w3-margin-top" style={{ flex: "1 1 auto" }}>
-                <i class="fas fa-level-up-alt fa-rotate-90" /> {extension.name}
+                <i className="fas fa-level-up-alt fa-rotate-90" /> {extension.name}
               </div>
 
               <div className="w3-padding-small w3-small w3-margin-top w3-center" style={{ flex: "0 1 55px" }}>
