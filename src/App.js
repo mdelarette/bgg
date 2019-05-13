@@ -5,6 +5,7 @@ import Players from "./components/Players";
 import Games from "./components/Games";
 import WishedGames from "./components/WishedGames";
 import BestGame from "./components/BestGame";
+import Game from "./components/Game";
 
 import { addPlayerToStore } from "./action";
 
@@ -54,6 +55,10 @@ class App extends Component {
 
         <div className="w3-third">
           <WishedGames />
+        </div>
+
+        <div className="w3-third w3-container">
+          <Game id={"42"} />
         </div>
       </div>
     );

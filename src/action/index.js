@@ -77,15 +77,12 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
     });
     ownership = games.filter(uniqueId);
 
-    // TODO Remove games already known to limit the fetch !
+    // Remove games already known to limit the fetch !
+
+    var existingIds = getState().bgg.games.map(game => game.id);
 
     var idsArray = ownership.map(o => o.gameId);
-    console.log(`idsArray`, idsArray);
-    var existingIds = getState().bgg.games.map(game => game.id);
-    console.log(`existingIds`, existingIds);
-
     idsArray = idsArray.filter(id => existingIds.find(x => x === id) === undefined);
-    console.log(`filteredIds`, idsArray);
 
     if (idsArray.length > 0) {
       var idsQueryString = idsArray.reduce((acc, id) => acc + `${id},`, "");
@@ -99,9 +96,9 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
         // TODO check x.$.type === 'boardgameexpansion'
 
         games = _games.items.item.map((x, index) => {
-          // if (index === 0) {
-          // console.log(`_games.items.item[${index}]=`, x);
-          // }
+          if (index === 0) {
+            console.log(`_games.items.item[${index}]=`, x);
+          }
 
           let game = {
             id: x.$.id,

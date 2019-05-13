@@ -21,16 +21,20 @@ import { createSelector } from "reselect";
 // );
 
 const gameIdsSelector = state =>
-  state.bgg.ownership.reduce((acc, o) => {
-    if (o.status.own === "1") {
-      // On exclu les extensions
-      let game = state.bgg.games.find(x => x.id === o.gameId);
-      if (game && !game.extends) {
-        acc.push(o.gameId);
+  state.bgg.ownership
+    .reduce((acc, o) => {
+      if (o.status.own === "1") {
+        // On exclu les extensions
+        let game = state.bgg.games.find(x => x.id === o.gameId);
+        if (game && !game.extends) {
+          acc.push({ id: o.gameId, name: game.name });
+        }
       }
-    }
-    return acc;
-  }, []);
+      return acc;
+    }, [])
+    .sort((a, b) => a.name > b.name)
+    .map(game => game.id)
+    .filter(uniqueId);
 
 export const getGameIds = createSelector(
   gameIdsSelector,
@@ -82,3 +86,7 @@ export const getGameRowData = createSelector(
     return g;
   }
 );
+
+function uniqueId(value, index, self) {
+  return self.slice(index + 1).findIndex((currentValue, i, r) => currentValue === value) === -1;
+}
