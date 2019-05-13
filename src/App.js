@@ -5,14 +5,8 @@ import Players from "./components/Players";
 import Games from "./components/Games";
 import WishedGames from "./components/WishedGames";
 import BestGame from "./components/BestGame";
-import Game from "./components/Game";
 
 import { addPlayerToStore } from "./action";
-
-const ninjaModeOn = "w3-hide-small w3-hide-medium w3-hide-large";
-const ninjaModeOff = "";
-
-const ninjaMode = ninjaModeOff;
 
 class App extends Component {
   addPlayer = () => {
@@ -39,7 +33,7 @@ class App extends Component {
   render() {
     return (
       <div className="w3-row w3-light-blue">
-        <div className={"w3-third w3-container " + ninjaMode}>
+        <div className="w3-third w3-container ">
           <BestGame />
         </div>
 
@@ -48,21 +42,17 @@ class App extends Component {
             className="w3-button w3-block w3-ripple w3-teal w3-round-xxlarge w3-xlarge w3-margin-top w3-margin-bottom"
             onClick={this.addPlayer}
           >
-            <span className={ninjaMode}>Add player</span>
+            <span>Add player</span>
           </button>
 
           <Players />
         </div>
 
-        <div className={"w3-third w3-container w3-hide" + ninjaMode}>
-          <Game id={"42"} />
-        </div>
-
-        <div className={"w3-third" + ninjaMode}>
+        <div className="w3-third">
           <Games />
         </div>
 
-        <div className={"w3-third" + ninjaMode}>
+        <div className="w3-third">
           <WishedGames />
         </div>
       </div>
