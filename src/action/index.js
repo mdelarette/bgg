@@ -37,7 +37,10 @@ export const updatePlayerToStore = (playerId, playerData) => {
 
 export const FETCH_PLAYER_GAMES = "FETCH_PLAYER_GAMES";
 
-const setPlayerGames = (ownership, games) => ({ type: "FETCH_PLAYER_GAMES", payload: { ownership, games } });
+const setPlayerGames = (playerId, ownership, games) => ({
+  type: "FETCH_PLAYER_GAMES",
+  payload: { playerId, ownership, games }
+});
 
 export const fetchPlayerGames = player => async (dispatch, getState) => {
   // Appel à l'api
@@ -58,7 +61,7 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
     const response = await axios.get(`https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`);
     parseString(response.data, function(err, _games) {
       games = _games.items.item.map((x, index) => {
-        console.log(`_games.items.item[${index}]=`, x);
+        // console.log(`_games.items.item[${index}]=`, x);
 
         let game = {
           gameId: x.$.objectid,
@@ -67,7 +70,7 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
           status: x.status[0].$
         };
 
-        console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+        // console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
 
         return game;
       });
@@ -76,70 +79,75 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
 
     // TODO Remove games already known to limit the fetch !
 
-    var ids = ownership.reduce((acc, game) => acc + `${game.gameId},`, "");
-    ids = ids.slice(0, ids.length - 1);
+    var idsArray = ownership.map(o => o.gameId);
+    console.log(`idsArray`, idsArray);
+    var existingIds = getState().bgg.games.map(game => game.id);
+    console.log(`existingIds`, existingIds);
 
-    const responseGame = await axios.get(`https://www.boardgamegeek.com/xmlapi2/thing?id=${ids}`);
-    parseString(responseGame.data, function(err, _games) {
-      //   console.log("_games=", _games);
-      // console.log("_games.items=", _games.items);
+    idsArray = idsArray.filter(id => existingIds.find(x => x === id) === undefined);
+    console.log(`filteredIds`, idsArray);
 
-      // TODO check x.$.type === 'boardgameexpansion'
+    if (idsArray.length > 0) {
+      var idsQueryString = idsArray.reduce((acc, id) => acc + `${id},`, "");
+      idsQueryString = idsQueryString.slice(0, idsQueryString.length - 1);
 
-      games = _games.items.item.map((x, index) => {
-        // if (index === 0) {
-        // console.log(`_games.items.item[${index}]=`, x);
-        // }
+      const responseGame = await axios.get(`https://www.boardgamegeek.com/xmlapi2/thing?id=${idsQueryString}`);
+      parseString(responseGame.data, function(err, _games) {
+        //   console.log("_games=", _games);
+        // console.log("_games.items=", _games.items);
 
-        let game = {
-          id: x.$.id,
-          type: x.$.type,
-          name: x.name[0].$.value,
-          minage: x.minage[0].$.value,
-          min: x.minplayers[0].$.value,
-          max: x.maxplayers[0].$.value,
-          minplaytime: x.minplaytime[0].$.value,
-          maxplaytime: x.maxplaytime[0].$.value,
-          playingtime: x.playingtime[0].$.value,
-          image: x.image[0],
-          thumbnail: x.thumbnail[0], // FIT IN 200x150
-          description: x.description[0]
-            .replace(/&apos;/g, "'")
-            .replace(/&quot;/g, '"')
-            .replace(/&gt;/g, ">")
-            .replace(/&lt;/g, "<")
-            .replace(/&amp;/g, "&")
+        // TODO check x.$.type === 'boardgameexpansion'
 
-            .replace(/&eacute;/g, "é")
+        games = _games.items.item.map((x, index) => {
+          // if (index === 0) {
+          // console.log(`_games.items.item[${index}]=`, x);
+          // }
 
-            .replace(/&#10;/g, "\n")
-        };
+          let game = {
+            id: x.$.id,
+            type: x.$.type,
+            name: x.name[0].$.value,
+            minage: x.minage[0].$.value,
+            min: x.minplayers[0].$.value,
+            max: x.maxplayers[0].$.value,
+            minplaytime: x.minplaytime[0].$.value,
+            maxplaytime: x.maxplaytime[0].$.value,
+            playingtime: x.playingtime[0].$.value,
+            image: x.image[0],
+            thumbnail: x.thumbnail[0], // FIT IN 200x150
+            description: x.description[0]
+              .replace(/&apos;/g, "'")
+              .replace(/&quot;/g, '"')
+              .replace(/&gt;/g, ">")
+              .replace(/&lt;/g, "<")
+              .replace(/&amp;/g, "&")
 
-        if (game.type === "boardgameexpansion") {
-          game.extends = x.link.reduce((accumulator, currentValue) => {
-            if (currentValue.$.type === "boardgameexpansion") {
-              accumulator.push(currentValue.$.id);
-            }
-            return accumulator;
-          }, []);
-        }
+              .replace(/&eacute;/g, "é")
 
-        // console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+              .replace(/&#10;/g, "\n")
+          };
 
-        return game;
+          if (game.type === "boardgameexpansion") {
+            game.extends = x.link.reduce((accumulator, currentValue) => {
+              if (currentValue.$.type === "boardgameexpansion") {
+                accumulator.push(currentValue.$.id);
+              }
+              return accumulator;
+            }, []);
+          }
+
+          // console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+
+          return game;
+        });
+        return;
       });
-
-      //   game = _game.items.item[0];
-      return;
-      // games = _games.items.item.map(x => {
-      //   return { id: x.$.objectid, name: x.name[0]._ };
-      // });
-    });
+    }
   } catch (error) {
     console.error(error);
   }
 
-  dispatch(setPlayerGames(ownership, games));
+  dispatch(setPlayerGames(player.id, ownership, games));
 };
 
 function uniqueId(value, index, self) {

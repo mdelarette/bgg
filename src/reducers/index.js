@@ -3,7 +3,16 @@ import produce from "immer";
 import { ADD_PLAYER, DELETE_PLAYER, UPDATE_PLAYER, FETCH_PLAYER_GAMES } from "../action";
 
 const initialState = {
-  players: [],
+  players: [
+    {
+      id: 1,
+      bggName: "Bratac"
+    },
+    {
+      id: 2,
+      bggName: "Wallice35"
+    }
+  ],
   ownership: [],
   games: []
 };
@@ -32,11 +41,11 @@ export default (state = initialState, action) => {
 
     case FETCH_PLAYER_GAMES:
       return produce(state, draft => {
-        draft.games = action.payload.games;
-        // TODO Limit to game id
-        // draft.owners[action.payload.playerId] = action.payload.games;
+        draft.games = draft.games.concat(action.payload.games);
 
-        draft.ownership = action.payload.ownership;
+        draft.ownership = draft.ownership
+          .filter(x => x.playerId !== action.payload.playerId)
+          .concat(action.payload.ownership);
       });
 
     default:
