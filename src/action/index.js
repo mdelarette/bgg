@@ -96,7 +96,11 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
         // TODO check x.$.type === 'boardgameexpansion'
 
         games = _games.items.item.map((x, index) => {
-          if (index === 0) {
+          // if (index === 0) {
+          // console.log(`_games.items.item[${index}]=`, x);
+          // }
+
+          if (x.$.id === "822") {
             console.log(`_games.items.item[${index}]=`, x);
           }
 

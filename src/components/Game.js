@@ -19,6 +19,8 @@ const Game = ({ id, game }) => {
       <h1>{game.name}</h1>
       <h2>{`min: ${game.min} | max: ${game.max}`}</h2>
       <p style={{ whiteSpace: "pre-line" }}>{game.description}</p>
+
+      <a href={"https://boardgamegeek.com/boardgame/" + game.id}>View on boardgamegeek.com</a>
     </div>
   );
 };
