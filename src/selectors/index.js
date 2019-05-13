@@ -32,7 +32,7 @@ const gameIdsSelector = state =>
       }
       return acc;
     }, [])
-    .sort((a, b) => a.name > b.name)
+    .sort((a, b) => a.name.localeCompare(b.name))
     .map(game => game.id)
     .filter(uniqueId);
 
