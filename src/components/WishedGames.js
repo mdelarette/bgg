@@ -22,8 +22,8 @@ function WishedGames({ gameIds }) {
           </div>
         </div>
 
-        {gameIds.map(id => (
-          <GameRow key={id} id={id} />
+        {gameIds.map((id, index) => (
+          <GameRow key={id} id={id} odd={index & 1} />
         ))}
       </div>
     </div>
