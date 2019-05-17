@@ -42,10 +42,14 @@ function GameRow({ game, odd }) {
 
       {game.extensions &&
         game.extensions.map((extension, index) => {
+          let extensionBackgroundFilter = "bgg-extension-even";
+          if (index & 1) {
+            extensionBackgroundFilter = "bgg-extension-odd";
+          }
           let elem = (
             <div
               key={index}
-              className={"w3-bar " + backgroundColor + " bgg-extension"}
+              className={"w3-bar " + backgroundColor + " " + extensionBackgroundFilter}
               style={{ display: "flex", flexDirection: "row", minHeight: "75px" }}
             >
               <div className="w3-padding-small" style={{ flex: "0 1 116px" }} onClick={() => {}}>

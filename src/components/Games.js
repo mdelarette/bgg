@@ -8,7 +8,7 @@ function Games({ gameIds }) {
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div className="w3-bar w3-teal" style={{ display: "flex", flexDirection: "row" }}>
+        <div className="w3-bar bgg-table-header" style={{ display: "flex", flexDirection: "row" }}>
           <div className="w3-padding-small w3-large" style={{ flex: "1 1 auto" }}>
             name ({gameIds.length})
           </div>
