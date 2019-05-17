@@ -12,9 +12,9 @@ function GameRow({ game, odd }) {
     return null;
   }
 
-  let backgroundColor = "w3-white";
+  let backgroundColor = "bgg-even";
   if (odd) {
-    backgroundColor = "w3-orange";
+    backgroundColor = "bgg-odd";
   }
 
   return (
@@ -45,7 +45,7 @@ function GameRow({ game, odd }) {
           let elem = (
             <div
               key={index}
-              className={"w3-bar " + backgroundColor}
+              className={"w3-bar " + backgroundColor + " bgg-extension"}
               style={{ display: "flex", flexDirection: "row", minHeight: "75px" }}
             >
               <div className="w3-padding-small" style={{ flex: "0 1 116px" }} onClick={() => {}}>
