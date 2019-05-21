@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getGameRowData } from "../selectors";
+import { getNbPlayers } from "../selectors";
 
 GameRow.propTypes = {
   id: PropTypes.string.isRequired
 };
 
-function GameRow({ game, odd }) {
+function GameRow({ game, odd, nbPlayers }) {
   if (!game) {
     return null;
   }
@@ -15,6 +16,22 @@ function GameRow({ game, odd }) {
   let backgroundColor = "bgg-even";
   if (odd) {
     backgroundColor = "bgg-odd";
+  }
+
+  console.log(nbPlayers);
+
+  let min = parseInt(game.min);
+  let max = parseInt(game.max);
+
+  let minClass = "w3-blue";
+  let maxClass = "w3-blue";
+
+  if (nbPlayers === min && nbPlayers === max) {
+    minClass = maxClass = "w3-green";
+  }
+
+  if (nbPlayers < min || nbPlayers > max) {
+    minClass = maxClass = "w3-red";
   }
 
   return (
@@ -32,11 +49,11 @@ function GameRow({ game, odd }) {
         </div>
 
         <div className="w3-padding-small w3-large w3-margin-top w3-center" style={{ flex: "0 1 55px" }}>
-          {game.min}
+          <span className={minClass}>{game.min}</span>
         </div>
 
         <div className="w3-padding-small w3-large w3-margin-top w3-center" style={{ flex: "0 1 55px" }}>
-          {game.max}
+          <span className={maxClass}>{game.max}</span>
         </div>
       </div>
 
@@ -83,7 +100,7 @@ function GameRow({ game, odd }) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return { game: getGameRowData(state, ownProps) };
+  return { game: getGameRowData(state, ownProps), nbPlayers: getNbPlayers(state, ownProps) };
 };
 
 // const mapDispatchToProps = dispatch => ({

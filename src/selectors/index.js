@@ -20,6 +20,11 @@ import { createSelector } from "reselect";
 //   (subtotal, tax) => ({ total: subtotal + tax })
 // );
 
+/*
+
+  Games related selectors
+
+*/
 const gameIdsSelector = state =>
   state.bgg.ownership
     .reduce((acc, o) => {
@@ -87,6 +92,25 @@ export const getGameRowData = createSelector(
   }
 );
 
+/*
+
+  Players related selectors
+
+*/
+const getNbPlayersSelector = (state, props) => {
+  return state.bgg.players.length;
+};
+
+export const getNbPlayers = createSelector(
+  getNbPlayersSelector,
+  nbPlayers => nbPlayers
+);
+
+/*
+
+  Various internal function
+
+*/
 function uniqueId(value, index, self) {
   return self.slice(index + 1).findIndex((currentValue, i, r) => currentValue === value) === -1;
 }
