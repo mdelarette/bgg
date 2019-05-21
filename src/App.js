@@ -33,7 +33,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="w3-row w3-light-blue">
+      <div className="w3-row bgg-app">
         <div className="w3-third w3-container ">
           <BestGame />
         </div>
