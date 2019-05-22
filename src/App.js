@@ -34,11 +34,11 @@ class App extends Component {
   render() {
     return (
       <div className="w3-row bgg-app">
-        <div className="w3-third w3-container ">
+        <div className="w3-col l8 w3-container ">
           <BestGame />
         </div>
 
-        <div className="w3-third w3-container">
+        <div className="w3-col l8 w3-container">
           <button
             className="w3-button w3-block w3-ripple w3-teal w3-round-xxlarge w3-xlarge w3-margin-top w3-margin-bottom"
             onClick={this.addPlayer}
@@ -49,15 +49,15 @@ class App extends Component {
           <Players />
         </div>
 
-        <div className="w3-third">
+        <div className="w3-col l8">
           <Games />
         </div>
 
-        <div className="w3-third">
+        <div className="w3-col l8">
           <WishedGames />
         </div>
 
-        <div className="w3-third w3-container">
+        <div className="w3-col l8 w3-container">
           <Game id={"42"} />
         </div>
       </div>
