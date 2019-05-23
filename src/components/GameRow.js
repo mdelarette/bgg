@@ -10,7 +10,7 @@ GameRow.propTypes = {
   id: PropTypes.string.isRequired
 };
 
-function GameRow({ game, odd, nbPlayers }) {
+function GameRow({ id, game, odd, nbPlayers }) {
   if (!game) {
     return null;
   }
@@ -46,7 +46,8 @@ function GameRow({ game, odd, nbPlayers }) {
               className="w3-padding-small"
               style={{ flex: "0 1 100px" }}
               onClick={() => {
-                setModalGame(game.id);
+                console.log("GameRow setModalGame:", id);
+                setModalGame(id);
               }}
             >
               <img

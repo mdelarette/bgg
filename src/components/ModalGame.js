@@ -27,7 +27,7 @@ const ModalGame = () => {
             <div className="w3-container">
               <Game id={modalGameId} />
 
-              <footer class="w3-container w3-teal">
+              <footer className="w3-container w3-teal">
                 <p>Modal Footer</p>
               </footer>
             </div>
