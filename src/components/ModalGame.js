@@ -2,7 +2,7 @@ import React from "react";
 
 import { ModalContext } from "../contexts/modal-context.js";
 
-import Game from "./Game";
+import GameInModal from "./GameInModal";
 
 const ModalGame = () => {
   return (
@@ -10,7 +10,7 @@ const ModalGame = () => {
       {({ modalGameId, setModalGame }) => (
         <div className="w3-modal" style={{ display: modalGameId === "0" ? "none" : "block" }}>
           <div className="w3-modal-content">
-            <Game id={modalGameId} setModalGame={setModalGame} />
+            <GameInModal id={modalGameId} setModalGame={setModalGame} />
           </div>
         </div>
       )}
