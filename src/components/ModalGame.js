@@ -23,14 +23,11 @@ const ModalGame = () => {
               </span>
               <h2>Modal Header</h2>
             </header>
+            <Game id={modalGameId} />
 
-            <div className="w3-container">
-              <Game id={modalGameId} />
-
-              <footer className="w3-container w3-teal">
-                <p>Modal Footer</p>
-              </footer>
-            </div>
+            <footer className="w3-container w3-teal">
+              <p>Modal Footer</p>
+            </footer>
           </div>
         </div>
       )}
