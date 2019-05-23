@@ -11,7 +11,12 @@ const ModalGame = () => {
         <div className="w3-modal" style={{ display: modalGameId === "0" ? "none" : "block" }}>
           <div className="w3-modal-content">
             <div className="w3-container">
-              <span onClick={() => setModalGame("0")} className="w3-button w3-display-topright">
+              <span
+                onClick={() => {
+                  setModalGame("0");
+                }}
+                className="w3-button w3-display-topright"
+              >
                 &times;
               </span>
               <Game id={modalGameId} />
