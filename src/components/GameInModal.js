@@ -50,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
 //   initDetailsReclamation: () => dispatch(initDetailsReclamation())
 // });
 
-Game.propTypes = {
+GameInModal.propTypes = {
   id: PropTypes.string.isRequired
 };
 
