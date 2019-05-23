@@ -17,9 +17,11 @@ class App extends React.Component {
     super(props);
 
     this.setModalGame = id => {
-      this.setState(state => ({
+      console.log("App.setModalGame:", id);
+      this.setState({
+        ...this.state,
         modalGameId: id
-      }));
+      });
     };
 
     this.state = {
