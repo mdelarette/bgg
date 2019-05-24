@@ -9,7 +9,7 @@ const ModalGame = () => {
     <ModalContext.Consumer>
       {({ modalGameId, setModalGame }) => (
         <div className="w3-modal" style={{ display: modalGameId === "0" ? "none" : "block" }}>
-          <div className="w3-modal-content">
+          <div className="w3-modal-content  w3-transparent">
             <GameInModal id={modalGameId} setModalGame={setModalGame} />
           </div>
         </div>

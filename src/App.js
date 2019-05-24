@@ -5,7 +5,7 @@ import Players from "./components/Players";
 import Games from "./components/Games";
 import WishedGames from "./components/WishedGames";
 import BestGame from "./components/BestGame";
-import Game from "./components/Game";
+// import Game from "./components/Game";
 import ModalGame from "./components/ModalGame";
 
 import { addPlayerToStore } from "./action";
@@ -25,7 +25,7 @@ class App extends React.Component {
     };
 
     this.state = {
-      modalGameId: "42",
+      modalGameId: "0",
       setModalGame: this.setModalGame
     };
   }
@@ -80,9 +80,9 @@ class App extends React.Component {
             <WishedGames />
           </div>
 
-          <div className="w3-col l8 w3-container">
+          {/* <div className="w3-col l8 w3-container">
             <Game id={"42"} />
-          </div>
+          </div> */}
         </div>
       </ModalContext.Provider>
     );

@@ -83,7 +83,14 @@ function GameRow({ id, game, odd, nbPlayers }) {
                   className={"w3-bar " + backgroundColor + " " + extensionBackgroundFilter}
                   style={{ display: "flex", flexDirection: "row", minHeight: "75px" }}
                 >
-                  <div className="w3-padding-small" style={{ flex: "0 1 116px" }} onClick={() => {}}>
+                  <div
+                    className="w3-padding-small"
+                    style={{ flex: "0 1 116px" }}
+                    onClick={() => {
+                      console.log("GameRow extension setModalGame:", extension.id);
+                      setModalGame(extension.id);
+                    }}
+                  >
                     {/* <i class="fas fa-caret-right" /> */}
 
                     <img

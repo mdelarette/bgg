@@ -72,8 +72,6 @@ export const getOwnedGames = createSelector(
   games => games
 );
 
-const gameRowDataSelector = (state, props) => state.bgg.games.find(x => x.id === props.id);
-
 const extensionsSelector = (state, props) => {
   return state.bgg.games
     .filter(x => x.extends && x.extends.find(y => y === props.id) !== undefined)
@@ -83,11 +81,56 @@ const extensionsSelector = (state, props) => {
     });
 };
 
+/*
+
+  Game ROW
+
+*/
+const gameRowDataSelector = (state, props) => state.bgg.games.find(x => x.id === props.id);
+
 export const getGameRowData = createSelector(
   gameRowDataSelector,
   extensionsSelector,
   (game, extensions) => {
     var g = { name: game.name, thumbnail: game.thumbnail, min: game.min, max: game.max, extensions };
+    return g;
+  }
+);
+
+/*
+
+  Game ROW
+
+*/
+
+const gameDataSelector = (state, props) => state.bgg.games.find(x => x.id === props.id);
+
+const ownersSelector = (state, props) => {
+  var ownerIds = state.bgg.ownership.filter(x => x.gameId === props.id && x.status.own === "1").map(z => z.playerId);
+  return state.bgg.players.filter(x => ownerIds.find(y => y === x.id));
+};
+
+export const getGameData = createSelector(
+  gameDataSelector,
+  extensionsSelector,
+  ownersSelector,
+  (game, extensions, owners) => {
+    if (!game) {
+      return null;
+    }
+    var g = {
+      // id: game.id,
+      name: game.name,
+      thumbnail: game.thumbnail,
+      min: game.min,
+      max: game.max,
+      minage: game.minage,
+      description: game.description,
+      extensions, // TODO map with More infos
+      owners, // TODO map with less infos
+      extends: game.extends
+      // Extends
+    };
     return g;
   }
 );

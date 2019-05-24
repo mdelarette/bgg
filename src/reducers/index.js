@@ -6,7 +6,8 @@ const initialState = {
   players: [
     {
       id: 1,
-      bggName: "Bratac"
+      bggName: "Bratac",
+      email: "bratac@free.fr"
     },
     {
       id: 2,
