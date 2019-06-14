@@ -70,7 +70,7 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
           status: x.status[0].$
         };
 
-        // console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+        //console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
 
         return game;
       });
@@ -100,9 +100,9 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
           // console.log(`_games.items.item[${index}]=`, x);
           // }
 
-          if (x.$.id === "822") {
-            console.log(`_games.items.item[${index}]=`, x);
-          }
+          // if (x.$.id === "822") {
+          // console.log(`_games.items.item[${index}]=`, x);
+          // }
 
           let game = {
             id: x.$.id,
@@ -123,9 +123,22 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
               .replace(/&lt;/g, "<")
               .replace(/&amp;/g, "&")
 
+              .replace(/&auml;/g, "ä")
               .replace(/&eacute;/g, "é")
+              .replace(/&iuml;/g, "ï")
+              .replace(/&ouml;/g, "ö")
+              .replace(/&uuml;/g, "ü")
 
+              .replace(/&ndash;/g, "-")
+
+              .replace(/&szlig;/g, "ß")
+
+              .replace(/&#9;/g, "\n")
               .replace(/&#10;/g, "\n")
+
+              .replace(/&rsquo;/g, "’")
+
+              .replace(/&#31;/g, "")
           };
 
           if (game.type === "boardgameexpansion") {
@@ -144,11 +157,11 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
         return;
       });
     }
+
+    dispatch(setPlayerGames(player.id, ownership, games));
   } catch (error) {
     console.error(error);
   }
-
-  dispatch(setPlayerGames(player.id, ownership, games));
 };
 
 function uniqueId(value, index, self) {

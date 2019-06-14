@@ -11,7 +11,8 @@ const initialState = {
     },
     {
       id: 2,
-      bggName: "Wallice35"
+      bggName: "Wallice35",
+      email: "wallice35@free.fr"
     }
   ],
   ownership: [],

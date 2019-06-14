@@ -15,7 +15,7 @@ const Player = ({ player, updatePlayerToStore, deletePlayerFromStore, fetchPlaye
   const [email, setEmail] = React.useState(player.email);
   // const [thumbnail, setThumbnail] = React.useState(player.thumbnail);
 
-  const gravatar = React.useMemo(() => (email ? get_gravatar(email, 32) : null), [email]);
+  const gravatar = React.useMemo(() => (email ? get_gravatar(email, 85) : null), [email]);
 
   const valid = () => {
     updatePlayerToStore(player.id, { name, bggName, age, email });

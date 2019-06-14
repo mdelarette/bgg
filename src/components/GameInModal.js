@@ -1,7 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getGameData } from "../selectors";
+
+import { get_gravatar } from "../utils/Gravatar";
 
 const GameInModal = ({ id, game, setModalGame }) => {
   if (!game) {
@@ -31,10 +32,22 @@ const GameInModal = ({ id, game, setModalGame }) => {
   };
 
   const Owners = () => {
-    return <div>owners</div>;
+    return game.owners ? game.owners.map((owner, index) => <Owner key={index} owner={owner} />) : "";
   };
 
-  const Owner = () => {};
+  const Owner = ({ owner }) => {
+    var gravatar = owner.email ? get_gravatar(owner.email, 30) : null;
+
+    if (gravatar) {
+      return <img alt="gravatar" src={gravatar} className="w3-bar-item w3-circle" style={{ width: "30px" }} />;
+    }
+
+    if (!gravatar && owner.thumbnail) {
+      return <img alt="thumbnail" src={owner.thumbnail} className="w3-bar-item w3-circle" style={{ width: "30px" }} />;
+    }
+
+    return "";
+  };
 
   return (
     <React.Fragment>
@@ -72,19 +85,6 @@ const GameInModal = ({ id, game, setModalGame }) => {
 
 const mapStateToProps = (state, ownProps) => {
   return { game: getGameData(state, ownProps) };
-
-  // return {
-  //   game: state.bgg.games ? state.bgg.games.find(x => x.id === ownProps.id) : null
-  // };
-};
-
-// const mapDispatchToProps = dispatch => ({
-//   fetchReclamation: id => dispatch(fetchReclamation(id)),
-//   initDetailsReclamation: () => dispatch(initDetailsReclamation())
-// });
-
-GameInModal.propTypes = {
-  id: PropTypes.string.isRequired
 };
 
 export default connect(
