@@ -1,0 +1,8 @@
+Regularly lauch : npm audit
+
+Then npm audit fix if needed
+
+Commit with tag "npm audit fix"
+
+
+Deploy to github : npm run deploy
