@@ -13,6 +13,8 @@ import { addPlayerToStore } from "./action";
 import { ModalContext } from "./contexts/modal-context.js";
 import { Page } from "./constants/pages";
 
+import { name, version } from "../package.json";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -70,7 +72,9 @@ class App extends React.Component {
         <ModalGame />
 
         <div className="bgg-app">
-          <header className="w3-container w3-theme-d5 bgg-header">mon entête</header>
+          <header className="w3-container w3-theme-d5 bgg-header">
+            {name} - {version}
+          </header>
 
           <div className="w3-row bgg-body">
             {page === Page.Home && <div className="w3-col l8 w3-container ">Home</div>}

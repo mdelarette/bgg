@@ -16,7 +16,7 @@ Deploy to github : npm run deploy
 
 
 // Version management :
-use : npm version patch
+use : npm version patch   // Other suggestion to explore here : https://stackoverflow.com/a/39396977/8394211 
 
 
 
