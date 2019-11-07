@@ -15,7 +15,8 @@ Deploy to github : npm run deploy
 
 
 
-
+// Version management :
+use : npm version patch
 
 
 
