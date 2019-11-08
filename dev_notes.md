@@ -26,3 +26,7 @@ use : npm version patch // Other suggestion to explore here : https://stackoverf
 Verify version at : https://github.com/npm/cli
 Verify local version : npm -v
 Update if needed : npm install -g npm
+
+### MD - markdown
+
+https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax
