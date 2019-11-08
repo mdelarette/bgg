@@ -1,6 +1,6 @@
 This project is based on boardgamegeek.com data, and aims to provide you a selection of games for your party.
 
-It was started as a test project in a react course, and I try to make in grow in order to use it myself, and may be to be useful for someone else !
+It was started as a test project in a react course, and I try to make it grow in order to use it myself, and may be to be useful for someone else !
 
 ## Boargamegeek
 
@@ -27,4 +27,5 @@ And voilà ! A list of filtered games for your party !
 ## Contact
 
 Don't hesitate to contact me by mail bratac@free.fr
+
 Also feel free to fork, add pull request or file issues (bug or enhancement ...)

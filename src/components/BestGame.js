@@ -31,7 +31,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     games: getOwnedGames(state),
-    nbPlayers: state.bgg.players.length
+    nbPlayers: state.bgg.party.nbPlayers
   };
 };
 

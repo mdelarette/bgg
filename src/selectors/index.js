@@ -62,7 +62,11 @@ export const getWishedGameIds = createSelector(
 const ownedGamesSelector = state =>
   state.bgg.ownership.reduce((acc, o) => {
     if (o.status.own === "1") {
-      acc.push(o);
+      // On exclu les extensions
+      let game = state.bgg.games.find(x => x.id === o.gameId);
+      if (game && !game.extends) {
+        acc.push({ id: o.gameId, name: game.name, min: game.min, max: game.max, minage: game.minage });
+      }
     }
     return acc;
   }, []);
@@ -134,6 +138,13 @@ export const getGameData = createSelector(
     return g;
   }
 );
+
+/*
+
+  Best games
+  Owned and match nb players and min age from party
+  Sorted by ???
+*/
 
 /*
 

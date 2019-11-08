@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import Party from "./components/Party";
 import BestGame from "./components/BestGame";
 import Footer from "./components/Footer";
 import Games from "./components/Games";
@@ -81,6 +82,7 @@ class App extends React.Component {
 
             {page === Page.Selected && (
               <div className="w3-col l8 w3-container ">
+                <Party />
                 <BestGame />
               </div>
             )}
@@ -100,6 +102,13 @@ class App extends React.Component {
 
             {page === Page.Games && (
               <>
+                <div className="w3-col l8">
+                  <span>TODO if more than one owner add a filter</span>
+                </div>
+                <div className="w3-col l8">
+                  <span>tab for owned and wished games</span>
+                </div>
+
                 <div className="w3-col l8">
                   <Games />
                 </div>

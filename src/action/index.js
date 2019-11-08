@@ -1,6 +1,17 @@
 import { parseString } from "xml2js";
 import axios from "axios";
 
+export const UPDATE_PARTY = "UPDATE_PARTY";
+export const updatePartyToStore = party => {
+  console.log("updatePartyToStore !!!");
+  return {
+    type: UPDATE_PARTY,
+    payload: {
+      party
+    }
+  };
+};
+
 export const ADD_PLAYER = "ADD_PLAYER";
 export const addPlayerToStore = player => {
   return {

@@ -1,6 +1,6 @@
 import produce from "immer";
 
-import { ADD_PLAYER, DELETE_PLAYER, UPDATE_PLAYER, FETCH_PLAYER_GAMES } from "../action";
+import { ADD_PLAYER, DELETE_PLAYER, UPDATE_PLAYER, FETCH_PLAYER_GAMES, UPDATE_PARTY } from "../action";
 
 const initialState = {
   players: [
@@ -16,7 +16,12 @@ const initialState = {
     }
   ],
   ownership: [],
-  games: []
+  games: [],
+
+  party: {
+    nbPlayers: 2,
+    minAge: 8
+  }
 };
 
 export default (state = initialState, action) => {
@@ -39,6 +44,11 @@ export default (state = initialState, action) => {
         draft.players = draft.players.map(x =>
           x.id !== action.payload.playerId ? x : { ...x, ...action.payload.playerData }
         );
+      });
+
+    case UPDATE_PARTY:
+      return produce(state, draft => {
+        draft.party = action.payload.party;
       });
 
     case FETCH_PLAYER_GAMES:
