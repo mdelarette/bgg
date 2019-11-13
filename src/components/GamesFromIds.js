@@ -21,6 +21,13 @@ function GamesFromIds({ gameIds }) {
             className="w3-padding-small w3-large w3-center"
             style={{ flex: "0 1 55px" }}
           >
+            age
+          </div>
+
+          <div
+            className="w3-padding-small w3-large w3-center"
+            style={{ flex: "0 1 55px" }}
+          >
             min
           </div>
 

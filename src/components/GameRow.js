@@ -40,7 +40,11 @@ function GameRow({ id, game, odd, nbPlayers }) {
         <React.Fragment>
           <div
             className={"w3-bar " + backgroundColor}
-            style={{ display: "flex", flexDirection: "row", minHeight: "100px" }}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              minHeight: "100px"
+            }}
           >
             <div
               className="w3-padding-small"
@@ -58,15 +62,31 @@ function GameRow({ id, game, odd, nbPlayers }) {
               />
             </div>
 
-            <div className="                 w3-large w3-margin-top" style={{ flex: "1 1 auto" }}>
+            <div
+              className="                 w3-large w3-margin-top"
+              style={{ flex: "1 1 auto" }}
+            >
               {game.name}
             </div>
 
-            <div className="w3-padding-small w3-large w3-margin-top w3-center" style={{ flex: "0 1 55px" }}>
+            <div
+              className="w3-padding-small w3-large w3-margin-top w3-center"
+              style={{ flex: "0 1 55px" }}
+            >
+              <span>{game.minAge}</span>
+            </div>
+
+            <div
+              className="w3-padding-small w3-large w3-margin-top w3-center"
+              style={{ flex: "0 1 55px" }}
+            >
               <span className={minClass}>{game.min}</span>
             </div>
 
-            <div className="w3-padding-small w3-large w3-margin-top w3-center" style={{ flex: "0 1 55px" }}>
+            <div
+              className="w3-padding-small w3-large w3-margin-top w3-center"
+              style={{ flex: "0 1 55px" }}
+            >
               <span className={maxClass}>{game.max}</span>
             </div>
           </div>
@@ -80,14 +100,26 @@ function GameRow({ id, game, odd, nbPlayers }) {
               let elem = (
                 <div
                   key={index}
-                  className={"w3-bar " + backgroundColor + " " + extensionBackgroundFilter}
-                  style={{ display: "flex", flexDirection: "row", minHeight: "75px" }}
+                  className={
+                    "w3-bar " +
+                    backgroundColor +
+                    " " +
+                    extensionBackgroundFilter
+                  }
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    minHeight: "75px"
+                  }}
                 >
                   <div
                     className="w3-padding-small"
                     style={{ flex: "0 1 116px" }}
                     onClick={() => {
-                      console.log("GameRow extension setModalGame:", extension.id);
+                      console.log(
+                        "GameRow extension setModalGame:",
+                        extension.id
+                      );
                       setModalGame(extension.id);
                     }}
                   >
@@ -97,18 +129,37 @@ function GameRow({ id, game, odd, nbPlayers }) {
                       alt="thumbnail"
                       src={extension.thumbnail}
                       className="w3-circle"
-                      style={{ width: "50px", height: "37px", alignSelf: "center" }}
+                      style={{
+                        width: "50px",
+                        height: "37px",
+                        alignSelf: "center"
+                      }}
                     />
                   </div>
-                  <div className="                 w3-large w3-margin-top" style={{ flex: "1 1 auto" }}>
-                    <i className="fas fa-level-up-alt fa-rotate-90" /> {extension.name}
+                  <div
+                    className="                 w3-large w3-margin-top"
+                    style={{ flex: "1 1 auto" }}
+                  >
+                    <i className="fas fa-level-up-alt fa-rotate-90" />{" "}
+                    {extension.name}
                   </div>
 
-                  <div className="w3-padding-small w3-small w3-margin-top w3-center" style={{ flex: "0 1 55px" }}>
+                  <div
+                    className="w3-padding-small w3-small w3-margin-top w3-center"
+                    style={{ flex: "0 1 55px" }}
+                  ></div>
+
+                  <div
+                    className="w3-padding-small w3-small w3-margin-top w3-center"
+                    style={{ flex: "0 1 55px" }}
+                  >
                     {extension.min}
                   </div>
 
-                  <div className="w3-padding-small w3-small w3-margin-top w3-center" style={{ flex: "0 1 55px" }}>
+                  <div
+                    className="w3-padding-small w3-small w3-margin-top w3-center"
+                    style={{ flex: "0 1 55px" }}
+                  >
                     {extension.max}
                   </div>
                 </div>
@@ -123,7 +174,10 @@ function GameRow({ id, game, odd, nbPlayers }) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return { game: getGameRowData(state, ownProps), nbPlayers: getNbPlayers(state, ownProps) };
+  return {
+    game: getGameRowData(state, ownProps),
+    nbPlayers: getNbPlayers(state, ownProps)
+  };
 };
 
 // const mapDispatchToProps = dispatch => ({
@@ -131,7 +185,4 @@ const mapStateToProps = (state, ownProps) => {
 //   initDetailsReclamation: () => dispatch(initDetailsReclamation())
 // });
 
-export default connect(
-  mapStateToProps,
-  null
-)(GameRow);
+export default connect(mapStateToProps, null)(GameRow);

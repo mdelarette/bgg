@@ -28,6 +28,7 @@ const Party = ({ party, updatePartyToStore }) => {
           <p>
             <label>Number of players</label>
             <input
+              className="w3-input"
               type="number"
               min="1"
               name="nbPlayers"
@@ -38,7 +39,13 @@ const Party = ({ party, updatePartyToStore }) => {
 
           <p>
             <label>Age</label>
-            <input type="number" name="age" value={minAge} onChange={e => setMinAge(e.target.value)} />
+            <input
+              className="w3-input"
+              type="number"
+              name="age"
+              value={minAge}
+              onChange={e => setMinAge(e.target.value)}
+            />
           </p>
         </div>
       </React.Fragment>
@@ -56,7 +63,4 @@ const mapDispatchToProps = {
   updatePartyToStore
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Party);
+export default connect(mapStateToProps, mapDispatchToProps)(Party);

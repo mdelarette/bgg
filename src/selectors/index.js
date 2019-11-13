@@ -108,6 +108,7 @@ export const getGameRowData = createSelector(
       thumbnail: game.thumbnail,
       min: game.min,
       max: game.max,
+      minAge: game.minage,
       extensions
     };
     return g;
@@ -165,15 +166,24 @@ export const getGameData = createSelector(
 const partySelectionGameIdsSelector = state => {
   let nbPlayers = state.bgg.party.nbPlayers;
 
+  let minAge = state.bgg.party.minAge;
+
   return (
     state.bgg.ownership
       .reduce((acc, o) => {
         if (o.status.own === "1") {
-          // On exclu les extensions
           let game = state.bgg.games.find(x => x.id === o.gameId);
-          if (game && game.min <= nbPlayers && nbPlayers <= game.max) {
+          if (
+            game &&
+            parseInt(game.min) <= nbPlayers &&
+            nbPlayers <= parseInt(game.max) &&
+            minAge <= parseInt(game.minage)
+          ) {
             // TODO filter on age
             acc.push(o.gameId);
+            if (o.extends && o.extends.length > 0) {
+              acc.push(o.extends[0]);
+            }
           }
         }
         return acc;
@@ -201,6 +211,14 @@ const getNbPlayersSelector = (state, props) => {
 export const getNbPlayers = createSelector(
   getNbPlayersSelector,
   nbPlayers => nbPlayers
+);
+
+const getMinimumAgeSelector = (state, props) => {
+  return state.bgg.party.minAge;
+};
+export const getMinimumAge = createSelector(
+  getMinimumAgeSelector,
+  minAge => minAge
 );
 
 /*
