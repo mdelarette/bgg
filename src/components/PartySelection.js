@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getWishedGameIds } from "../selectors";
+import { getPartySelectionGameIds } from "../selectors";
 
 import GamesFromIds from "../components/GamesFromIds";
 
-function WishedGames({ gameIds }) {
+function PartySelection({ gameIds }) {
   return <GamesFromIds gameIds={gameIds} />;
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return { gameIds: getWishedGameIds(state) };
+  return { gameIds: getPartySelectionGameIds(state) };
 };
 
-export default connect(mapStateToProps, null)(WishedGames);
+export default connect(mapStateToProps, null)(PartySelection);

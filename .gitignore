@@ -25,3 +25,6 @@ yarn-error.log*
 
 # Local history extension
 .history
+
+# IDE setting
+/.vscode

@@ -12,8 +12,8 @@ const pages = [
     icon: "fas fa-home"
   },
   {
-    id: Page.Players,
-    name: "Players",
+    id: Page.Owners,
+    name: "Owners",
     icon: "fas fa-address-book"
   },
   {
@@ -22,8 +22,8 @@ const pages = [
     icon: "fas fa-dice-d6"
   },
   {
-    id: Page.Selected,
-    name: "Selected",
+    id: Page.Party,
+    name: "Party",
     icon: "fas fa-clipboard-check"
   }
 ];
@@ -34,7 +34,10 @@ const Footer = props => {
       {pages.map((page, index) => (
         <div
           key={index}
-          className={"w3-panel bgg-footer-item " + (page.id === props.page ? "selected w3-text-theme" : "")}
+          className={
+            "w3-panel bgg-footer-item " +
+            (page.id === props.page ? "selected w3-text-theme" : "")
+          }
           onClick={e => props.onClick(e, page.id)}
         >
           <i className={page.icon} />

@@ -41,10 +41,7 @@ const gameIdsSelector = state =>
     .map(game => game.id)
     .filter(uniqueId);
 
-export const getGameIds = createSelector(
-  gameIdsSelector,
-  gameIds => gameIds
-);
+export const getGameIds = createSelector(gameIdsSelector, gameIds => gameIds);
 
 const wishedGameIdsSelector = state =>
   state.bgg.ownership.reduce((acc, o) => {
@@ -65,22 +62,31 @@ const ownedGamesSelector = state =>
       // On exclu les extensions
       let game = state.bgg.games.find(x => x.id === o.gameId);
       if (game && !game.extends) {
-        acc.push({ id: o.gameId, name: game.name, min: game.min, max: game.max, minage: game.minage });
+        acc.push({
+          id: o.gameId,
+          name: game.name,
+          min: game.min,
+          max: game.max,
+          minage: game.minage
+        });
       }
     }
     return acc;
   }, []);
 
-export const getOwnedGames = createSelector(
-  ownedGamesSelector,
-  games => games
-);
+export const getOwnedGames = createSelector(ownedGamesSelector, games => games);
 
 const extensionsSelector = (state, props) => {
   return state.bgg.games
     .filter(x => x.extends && x.extends.find(y => y === props.id) !== undefined)
     .map(z => {
-      let extension = { id: z.id, name: z.name, min: z.min, max: z.max, thumbnail: z.thumbnail };
+      let extension = {
+        id: z.id,
+        name: z.name,
+        min: z.min,
+        max: z.max,
+        thumbnail: z.thumbnail
+      };
       return extension;
     });
 };
@@ -90,13 +96,20 @@ const extensionsSelector = (state, props) => {
   Game ROW
 
 */
-const gameRowDataSelector = (state, props) => state.bgg.games.find(x => x.id === props.id);
+const gameRowDataSelector = (state, props) =>
+  state.bgg.games.find(x => x.id === props.id);
 
 export const getGameRowData = createSelector(
   gameRowDataSelector,
   extensionsSelector,
   (game, extensions) => {
-    var g = { name: game.name, thumbnail: game.thumbnail, min: game.min, max: game.max, extensions };
+    var g = {
+      name: game.name,
+      thumbnail: game.thumbnail,
+      min: game.min,
+      max: game.max,
+      extensions
+    };
     return g;
   }
 );
@@ -107,10 +120,13 @@ export const getGameRowData = createSelector(
 
 */
 
-const gameDataSelector = (state, props) => state.bgg.games.find(x => x.id === props.id);
+const gameDataSelector = (state, props) =>
+  state.bgg.games.find(x => x.id === props.id);
 
 const ownersSelector = (state, props) => {
-  var ownerIds = state.bgg.ownership.filter(x => x.gameId === props.id && x.status.own === "1").map(z => z.playerId);
+  var ownerIds = state.bgg.ownership
+    .filter(x => x.gameId === props.id && x.status.own === "1")
+    .map(z => z.playerId);
   return state.bgg.players.filter(x => ownerIds.find(y => y === x.id));
 };
 
@@ -141,10 +157,36 @@ export const getGameData = createSelector(
 
 /*
 
-  Best games
+  Party selection
   Owned and match nb players and min age from party
   Sorted by ???
 */
+
+const partySelectionGameIdsSelector = state => {
+  let nbPlayers = state.bgg.party.nbPlayers;
+
+  return (
+    state.bgg.ownership
+      .reduce((acc, o) => {
+        if (o.status.own === "1") {
+          // On exclu les extensions
+          let game = state.bgg.games.find(x => x.id === o.gameId);
+          if (game && game.min <= nbPlayers && nbPlayers <= game.max) {
+            // TODO filter on age
+            acc.push(o.gameId);
+          }
+        }
+        return acc;
+      }, [])
+      // TODO sort on best fit to party
+      .filter(uniqueId)
+  );
+};
+
+export const getPartySelectionGameIds = createSelector(
+  partySelectionGameIdsSelector,
+  gameIds => gameIds
+);
 
 /*
 
@@ -152,7 +194,8 @@ export const getGameData = createSelector(
 
 */
 const getNbPlayersSelector = (state, props) => {
-  return state.bgg.players.length;
+  // return state.bgg.players.length;
+  return state.bgg.party.NbPlayers;
 };
 
 export const getNbPlayers = createSelector(
@@ -166,5 +209,9 @@ export const getNbPlayers = createSelector(
 
 */
 function uniqueId(value, index, self) {
-  return self.slice(index + 1).findIndex((currentValue, i, r) => currentValue === value) === -1;
+  return (
+    self
+      .slice(index + 1)
+      .findIndex((currentValue, i, r) => currentValue === value) === -1
+  );
 }

@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Party from "./components/Party";
-import BestGame from "./components/BestGame";
+// import BestGame from "./components/BestGame";
+import PartySelection from "./components/PartySelection";
+
 import Footer from "./components/Footer";
 import Games from "./components/Games";
 import ModalGame from "./components/ModalGame";
@@ -78,22 +80,17 @@ class App extends React.Component {
           </header>
 
           <div className="w3-row bgg-body">
-            {page === Page.Home && <div className="w3-col l8 w3-container ">Home</div>}
-
-            {page === Page.Selected && (
-              <div className="w3-col l8 w3-container ">
-                <Party />
-                <BestGame />
-              </div>
+            {page === Page.Home && (
+              <div className="w3-col l8 w3-container ">Home</div>
             )}
 
-            {page === Page.Players && (
+            {page === Page.Owners && (
               <div className="w3-col l8 w3-container ">
                 <button
                   className="w3-button w3-block w3-ripple w3-teal w3-round-xxlarge w3-xlarge w3-margin-top w3-margin-bottom"
                   onClick={this.addPlayer}
                 >
-                  <span>Add player</span>
+                  <span>Add owner</span>
                 </button>
 
                 <Players />
@@ -118,6 +115,14 @@ class App extends React.Component {
                 </div>
               </>
             )}
+
+            {page === Page.Party && (
+              <div className="w3-col l8 w3-container ">
+                <Party />
+                {/* <BestGame /> */}
+                <PartySelection />
+              </div>
+            )}
           </div>
 
           <Footer page={this.state.page} onClick={this.handlePageChange} />
@@ -137,7 +142,4 @@ const mapDispatchToProps = {
   addPlayerToStore
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(App);
+export default connect(null, mapDispatchToProps)(App);
