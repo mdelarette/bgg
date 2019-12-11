@@ -2,7 +2,7 @@ This project is based on boardgamegeek.com data, and aims to provide you a selec
 
 It was started as a test project in a react course, and I try to make it grow in order to use it myself, and may be to be useful for someone else !
 
-## Boargamegeek
+## Boardgamegeek
 
 https://www.boardgamegeek.com/
 
