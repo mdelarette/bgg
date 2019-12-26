@@ -12,7 +12,7 @@ https://mdelarette.github.io/bgg/index.html
 
 ### Home
 
-### Owners (players but shoud be renamed)
+### Owners
 
 ### Games
 
