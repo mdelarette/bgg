@@ -59,7 +59,6 @@ class App extends React.Component {
   };
 
   handlePageChange = (event, page) => {
-    console.log("changing to page : ", page);
     if (this.state.page !== page) {
       this.setState({
         page: page
@@ -117,7 +116,7 @@ class App extends React.Component {
             )}
 
             {page === Page.Party && (
-              <div className="w3-col l8 w3-container ">
+              <div className="w3-col l8">
                 <Party />
                 {/* <BestGame /> */}
                 <PartySelection />

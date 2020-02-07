@@ -1,6 +1,10 @@
 import { parseString } from "xml2js";
 import axios from "axios";
 
+const axiosConfig = {
+  headers: { "Access-Control-Allow-Origin": true }
+};
+
 export const UPDATE_PARTY = "UPDATE_PARTY";
 export const updatePartyToStore = party => {
   console.log("updatePartyToStore !!!");
@@ -34,7 +38,11 @@ export const deletePlayerFromStore = playerId => {
 
 export const UPDATE_PLAYER = "UPDATE_PLAYER";
 export const updatePlayerToStore = (playerId, playerData) => {
-  console.log("updatePlayerToStore", playerId, JSON.stringify(playerData, null, 2));
+  console.log(
+    "updatePlayerToStore",
+    playerId,
+    JSON.stringify(playerData, null, 2)
+  );
   return {
     type: UPDATE_PLAYER,
     payload: {
@@ -69,7 +77,9 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
   //  </message>
 
   try {
-    const response = await axios.get(`https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`);
+    const response = await axios.get(
+      `https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`
+    );
     parseString(response.data, function(err, _games) {
       games = _games.items.item.map((x, index) => {
         // console.log(`_games.items.item[${index}]=`, x);
@@ -93,13 +103,17 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
     var existingIds = getState().bgg.games.map(game => game.id);
 
     var idsArray = ownership.map(o => o.gameId);
-    idsArray = idsArray.filter(id => existingIds.find(x => x === id) === undefined);
+    idsArray = idsArray.filter(
+      id => existingIds.find(x => x === id) === undefined
+    );
 
     if (idsArray.length > 0) {
       var idsQueryString = idsArray.reduce((acc, id) => acc + `${id},`, "");
       idsQueryString = idsQueryString.slice(0, idsQueryString.length - 1);
 
-      const responseGame = await axios.get(`https://www.boardgamegeek.com/xmlapi2/thing?id=${idsQueryString}`);
+      const responseGame = await axios.get(
+        `https://www.boardgamegeek.com/xmlapi2/thing?id=${idsQueryString}`
+      );
       parseString(responseGame.data, function(err, _games) {
         //   console.log("_games=", _games);
         // console.log("_games.items=", _games.items);
@@ -176,5 +190,11 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
 };
 
 function uniqueId(value, index, self) {
-  return self.slice(index + 1).findIndex((currentValue, i, r) => currentValue.gameId === value.gameId) === -1;
+  return (
+    self
+      .slice(index + 1)
+      .findIndex(
+        (currentValue, i, r) => currentValue.gameId === value.gameId
+      ) === -1
+  );
 }

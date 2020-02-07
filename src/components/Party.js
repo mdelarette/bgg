@@ -19,7 +19,7 @@ const Party = ({ party, updatePartyToStore }) => {
       updatePartyToStore({ nbPlayers: nbPlayers, minAge: minAge });
       return;
     }
-  }, [nbPlayers, minAge]);
+  }, [nbPlayers, minAge, updatePartyToStore]);
 
   return (
     <div className="w3-margin-bottom">

@@ -20,7 +20,7 @@ List of owners' games - owned and whished
 
 ### Selected
 
-Adjust tehe number of players (in future age and other parameters)
+Adjust the number of players (in future age and other parameters)
 
 And voilà ! A list of filtered games for your party !
 

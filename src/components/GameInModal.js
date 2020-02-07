@@ -32,18 +32,34 @@ const GameInModal = ({ id, game, setModalGame }) => {
   };
 
   const Owners = () => {
-    return game.owners ? game.owners.map((owner, index) => <Owner key={index} owner={owner} />) : "";
+    return game.owners
+      ? game.owners.map((owner, index) => <Owner key={index} owner={owner} />)
+      : "";
   };
 
   const Owner = ({ owner }) => {
     var gravatar = owner.email ? get_gravatar(owner.email, 30) : null;
 
     if (gravatar) {
-      return <img alt="gravatar" src={gravatar} className="w3-bar-item w3-circle" style={{ width: "30px" }} />;
+      return (
+        <img
+          alt="gravatar"
+          src={gravatar}
+          className="w3-bar-item w3-circle"
+          style={{ width: "30px" }}
+        />
+      );
     }
 
     if (!gravatar && owner.thumbnail) {
-      return <img alt="thumbnail" src={owner.thumbnail} className="w3-bar-item w3-circle" style={{ width: "30px" }} />;
+      return (
+        <img
+          alt="thumbnail"
+          src={owner.thumbnail}
+          className="w3-bar-item w3-circle"
+          style={{ width: "30px" }}
+        />
+      );
     }
 
     return "";
@@ -76,7 +92,15 @@ const GameInModal = ({ id, game, setModalGame }) => {
 
       <footer className="w3-container w3-green">
         <p>
-          <a href={"https://boardgamegeek.com/boardgame/" + id}>View on boardgamegeek.com</a>
+          <a href={"https://boardgamegeek.com/boardgame/" + id}>
+            View on boardgamegeek.com
+          </a>
+        </p>
+
+        <p>
+          <a href={"https://melodice.org/playlist/" + game.name}>
+            Melodice.org
+          </a>
         </p>
       </footer>
     </React.Fragment>
@@ -87,7 +111,4 @@ const mapStateToProps = (state, ownProps) => {
   return { game: getGameData(state, ownProps) };
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(GameInModal);
+export default connect(mapStateToProps, null)(GameInModal);
