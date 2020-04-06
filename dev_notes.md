@@ -11,13 +11,13 @@ Commit with tag "npm audit fix"
 npm outdated
 npm update [package_name]
 
-## DEPLOY
-
-npm run deploy
-
 ## VERSIONNING
 
 use : npm version patch // Other suggestion to explore here : https://stackoverflow.com/a/39396977/8394211
+
+## DEPLOY
+
+npm run deploy
 
 ## TOOLS
 
