@@ -152,6 +152,7 @@ export const fetchPlayerGames = player => async (dispatch, getState) => {
               .replace(/&eacute;/g, "é")
               .replace(/&iuml;/g, "ï")
               .replace(/&ouml;/g, "ö")
+              .replace(/&ocirc;/g, "ô")
               .replace(/&uuml;/g, "ü")
 
               .replace(/&ndash;/g, "-")
