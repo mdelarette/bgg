@@ -29,3 +29,7 @@ And voilà ! A list of filtered games for your party !
 Don't hesitate to contact me by mail bratac@free.fr
 
 Also feel free to fork, add pull request or file issues (bug or enhancement ...)
+
+## Thanks
+
+https://github.com/mathiasbynens/he
