@@ -7,7 +7,7 @@ import { getNbPlayers } from "../selectors";
 import { ModalContext } from "../contexts/modal-context.js";
 
 GameRow.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
 };
 
 function GameRow({ id, game, odd, nbPlayers }) {
@@ -36,22 +36,22 @@ function GameRow({ id, game, odd, nbPlayers }) {
 
   return (
     <ModalContext.Consumer>
-      {({ modalGameId, setModalGame }) => (
+      {({ modalGameId, setModalGameId }) => (
         <React.Fragment>
           <div
             className={"w3-bar " + backgroundColor}
             style={{
               display: "flex",
               flexDirection: "row",
-              minHeight: "100px"
+              minHeight: "100px",
             }}
           >
             <div
               className="w3-padding-small"
               style={{ flex: "0 1 100px" }}
               onClick={() => {
-                console.log("GameRow setModalGame:", id);
-                setModalGame(id);
+                console.log("GameRow setModalGameId:", id);
+                setModalGameId(id);
               }}
             >
               <img
@@ -109,7 +109,7 @@ function GameRow({ id, game, odd, nbPlayers }) {
                   style={{
                     display: "flex",
                     flexDirection: "row",
-                    minHeight: "75px"
+                    minHeight: "75px",
                   }}
                 >
                   <div
@@ -120,7 +120,7 @@ function GameRow({ id, game, odd, nbPlayers }) {
                         "GameRow extension setModalGame:",
                         extension.id
                       );
-                      setModalGame(extension.id);
+                      setModalGameId(extension.id);
                     }}
                   >
                     {/* <i class="fas fa-caret-right" /> */}
@@ -132,7 +132,7 @@ function GameRow({ id, game, odd, nbPlayers }) {
                       style={{
                         width: "50px",
                         height: "37px",
-                        alignSelf: "center"
+                        alignSelf: "center",
                       }}
                     />
                   </div>
@@ -176,7 +176,7 @@ function GameRow({ id, game, odd, nbPlayers }) {
 const mapStateToProps = (state, ownProps) => {
   return {
     game: getGameRowData(state, ownProps),
-    nbPlayers: getNbPlayers(state, ownProps)
+    nbPlayers: getNbPlayers(state, ownProps),
   };
 };
 

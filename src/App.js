@@ -1,6 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { useState, useEffect } from "react";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+
+import Container from "@material-ui/core/Container";
+
+import Fab from "@material-ui/core/Fab";
+
+import IconButton from "@material-ui/core/IconButton";
+
+import HomeIcon from "@material-ui/icons/Home";
+import OwnersIcon from "@material-ui/icons/People";
+import GamesIcon from "@material-ui/icons/Casino";
+import PartyIcon from "@material-ui/icons/SupervisedUserCircle";
+import AddIcon from "@material-ui/icons/Add";
+
 import Party from "./components/Party";
 // import BestGame from "./components/BestGame";
 import PartySelection from "./components/PartySelection";
@@ -18,31 +37,54 @@ import { Page } from "./constants/pages";
 
 import { name, version } from "../package.json";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
 
-    this.setModalGame = id => {
-      console.log("App.setModalGame:", id);
-      this.setState({
-        ...this.state,
-        modalGameId: id
-      });
-    };
+    appBar: {
+      top: "auto",
+      bottom: 0,
+      "& > div": { alignItems: "flex-start" },
+    },
+    grow: {
+      flexGrow: 1,
+    },
 
-    this.state = {
-      modalGameId: "0",
-      setModalGame: this.setModalGame,
-      page: Page.Home
-    };
-  }
+    canvasesContainer: {
+      position: "absolute",
+    },
 
-  addPlayer = () => {
+    fab: {
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+      top: "auto",
+      left: "auto",
+      position: "fixed",
+      zIndex: 1500,
+    },
+  })
+);
+
+const App = ({ addPlayerToStore }) => {
+  const classes = useStyles();
+
+  const [modalGameId, setModalGameId] = useState("0");
+  const [page, setPage] = useState(Page.Home);
+
+  const addPlayer = () => {
     fetch("https://randomuser.me/api/")
-      .then(results => results.json())
-      .then(data => {
+      .then((results) => results.json())
+      .then((data) => {
         let testNewPlayer = data.results[0];
-        // console.log("addPlayer testNewPlayer", JSON.stringify(testNewPlayer, null, 2));
+        console.log("addPlayer testNewPlayer", testNewPlayer);
 
         let newPlayer = {
           id: testNewPlayer.login.uuid,
@@ -52,84 +94,229 @@ class App extends React.Component {
           color: "blue",
           fetched: false,
           email: "",
-          thumbnail: testNewPlayer.picture.thumbnail
+          thumbnail: testNewPlayer.picture.thumbnail,
         };
-        this.props.addPlayerToStore(newPlayer);
+        addPlayerToStore(newPlayer);
       });
   };
 
-  handlePageChange = (event, page) => {
-    if (this.state.page !== page) {
-      this.setState({
-        page: page
-      });
-    }
-  };
+  return (
+    <ModalContext.Provider value={{ modalGameId, setModalGameId }}>
+      <ModalGame />
 
-  render() {
-    const { page } = this.state;
+      <>
+        <AppBar id={"topBar"} position="static">
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              {`${name} - ${version}`}
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
-    return (
-      <ModalContext.Provider value={this.state}>
-        <ModalGame />
+        <Container
+          maxWidth="sm"
+          style={{
+            backgroundColor: "#cfe8fc",
+            paddingBottom: "64px",
+          }}
+        >
+          {page === Page.Home && (
+            <Container style={{ backgroundColor: "#dddddd" }}>Home</Container>
+          )}
 
-        <div className="bgg-app">
-          <header className="w3-container w3-theme-d5 bgg-header">
-            {name} - {version}
-          </header>
+          {page === Page.Owners && (
+            <>
+              <Fab
+                color="primary"
+                aria-label="add"
+                onClick={addPlayer}
+                className={classes.fab}
+              >
+                <AddIcon />
+              </Fab>
 
-          <div className="w3-row bgg-body">
-            {page === Page.Home && (
-              <div className="w3-col l8 w3-container ">Home</div>
-            )}
+              <Players />
+            </>
+          )}
 
-            {page === Page.Owners && (
-              <div className="w3-col l8 w3-container ">
-                <button
-                  className="w3-button w3-block w3-ripple w3-teal w3-round-xxlarge w3-xlarge w3-margin-top w3-margin-bottom"
-                  onClick={this.addPlayer}
-                >
-                  <span>Add owner</span>
-                </button>
-
-                <Players />
-              </div>
-            )}
-
-            {page === Page.Games && (
-              <>
-                <div className="w3-col l8">
-                  <span>TODO if more than one owner add a filter</span>
-                </div>
-                <div className="w3-col l8">
-                  <span>tab for owned and wished games</span>
-                </div>
-
-                <div className="w3-col l8">
-                  <Games />
-                </div>
-
-                <div className="w3-col l8">
-                  <WishedGames />
-                </div>
-              </>
-            )}
-
-            {page === Page.Party && (
+          {page === Page.Games && (
+            <Container style={{ backgroundColor: "#cf00fc" }}>
               <div className="w3-col l8">
-                <Party />
-                {/* <BestGame /> */}
-                <PartySelection />
+                <span>TODO if more than one owner add a filter</span>
               </div>
-            )}
-          </div>
+              <div className="w3-col l8">
+                <span>tab for owned and wished games</span>
+              </div>
 
-          <Footer page={this.state.page} onClick={this.handlePageChange} />
-        </div>
-      </ModalContext.Provider>
-    );
-  }
-}
+              <div className="w3-col l8">
+                <Games />
+              </div>
+
+              <div className="w3-col l8">
+                <WishedGames />
+              </div>
+            </Container>
+          )}
+
+          {page === Page.Party && (
+            <Container style={{ backgroundColor: "#00e8fc" }}>
+              <Party />
+              {/* <BestGame /> */}
+              <PartySelection />
+            </Container>
+          )}
+        </Container>
+
+        <AppBar
+          id={"bottomBar"}
+          position="fixed"
+          color="primary"
+          className={classes.appBar}
+        >
+          <Toolbar>
+            <div className={classes.grow} />
+            <IconButton color="inherit" onClick={() => setPage(Page.Home)}>
+              <HomeIcon />
+            </IconButton>
+            <IconButton color="inherit" onClick={() => setPage(Page.Owners)}>
+              <OwnersIcon />
+            </IconButton>
+            <IconButton color="inherit" onClick={() => setPage(Page.Games)}>
+              <GamesIcon />
+            </IconButton>
+            <IconButton color="inherit" onClick={() => setPage(Page.Party)}>
+              <PartyIcon />
+            </IconButton>
+            <div className={classes.grow} />
+          </Toolbar>
+        </AppBar>
+      </>
+    </ModalContext.Provider>
+  );
+};
+
+// class AppBak extends React.Component {
+//   constructor(props) {
+//     super(props);
+
+//     this.setModalGame = (id) => {
+//       console.log("App.setModalGame:", id);
+//       this.setState({
+//         ...this.state,
+//         modalGameId: id,
+//       });
+//     };
+
+//     this.state = {
+//       modalGameId: "0",
+//       setModalGame: this.setModalGame,
+//       page: Page.Home,
+//     };
+//   }
+
+//   addPlayer = () => {
+//     fetch("https://randomuser.me/api/")
+//       .then((results) => results.json())
+//       .then((data) => {
+//         let testNewPlayer = data.results[0];
+//         // console.log("addPlayer testNewPlayer", JSON.stringify(testNewPlayer, null, 2));
+
+//         let newPlayer = {
+//           id: testNewPlayer.login.uuid,
+//           name: testNewPlayer.name.first,
+//           bggName: "",
+//           age: testNewPlayer.dob.age,
+//           color: "blue",
+//           fetched: false,
+//           email: "",
+//           thumbnail: testNewPlayer.picture.thumbnail,
+//         };
+//         this.props.addPlayerToStore(newPlayer);
+//       });
+//   };
+
+//   handlePageChange = (event, page) => {
+//     if (this.state.page !== page) {
+//       this.setState({
+//         page: page,
+//       });
+//     }
+//   };
+
+//   render() {
+//     const { page } = this.state;
+
+//     return (
+//       <ModalContext.Provider value={this.state}>
+//         <ModalGame />
+
+//         <>
+//           <AppBar id={"topBar"} position="static">
+//             <Toolbar>
+//               <Typography variant="h6" className={classes.title}>
+//                 {`${name} - ${version}`}
+//               </Typography>
+//             </Toolbar>
+//           </AppBar>
+//         </>
+
+//         <div className="bgg-app">
+//           <header className="w3-container w3-theme-d5 bgg-header">
+//             {name} - {version}
+//           </header>
+
+//           <div className="w3-row bgg-body">
+//             {page === Page.Home && (
+//               <div className="w3-col l8 w3-container ">Home</div>
+//             )}
+
+//             {page === Page.Owners && (
+//               <div className="w3-col l8 w3-container ">
+//                 <button
+//                   className="w3-button w3-block w3-ripple w3-teal w3-round-xxlarge w3-xlarge w3-margin-top w3-margin-bottom"
+//                   onClick={this.addPlayer}
+//                 >
+//                   <span>Add owner</span>
+//                 </button>
+
+//                 <Players />
+//               </div>
+//             )}
+
+//             {page === Page.Games && (
+//               <>
+//                 <div className="w3-col l8">
+//                   <span>TODO if more than one owner add a filter</span>
+//                 </div>
+//                 <div className="w3-col l8">
+//                   <span>tab for owned and wished games</span>
+//                 </div>
+
+//                 <div className="w3-col l8">
+//                   <Games />
+//                 </div>
+
+//                 <div className="w3-col l8">
+//                   <WishedGames />
+//                 </div>
+//               </>
+//             )}
+
+//             {page === Page.Party && (
+//               <div className="w3-col l8">
+//                 <Party />
+//                 {/* <BestGame /> */}
+//                 <PartySelection />
+//               </div>
+//             )}
+//           </div>
+
+//           <Footer page={this.state.page} onClick={this.handlePageChange} />
+//         </div>
+//       </ModalContext.Provider>
+//     );
+//   }
+// }
 
 // const mapStateToProps = (state, ownProps) => {
 //   return {
@@ -138,7 +325,7 @@ class App extends React.Component {
 // };
 
 const mapDispatchToProps = {
-  addPlayerToStore
+  addPlayerToStore,
 };
 
 export default connect(null, mapDispatchToProps)(App);

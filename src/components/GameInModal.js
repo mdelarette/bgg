@@ -4,7 +4,7 @@ import { getGameData } from "../selectors";
 
 import { get_gravatar } from "../utils/Gravatar";
 
-const GameInModal = ({ id, game, setModalGame }) => {
+const GameInModal = ({ id, game, setModalGameId }) => {
   if (!game) {
     return (
       <div className="w3-margin w3-card w3-yellow">
@@ -70,7 +70,7 @@ const GameInModal = ({ id, game, setModalGame }) => {
       <header className="w3-container w3-green">
         <span
           onClick={() => {
-            setModalGame("0");
+            setModalGameId("0");
           }}
           className="w3-button w3-display-topright"
         >
