@@ -49,7 +49,7 @@ const Player = ({
   return (
     <>
       {!editMode && (
-        <Card variant="outlined">
+        <Card raised>
           <CardHeader
             title={
               player.bggName

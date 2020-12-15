@@ -62,11 +62,34 @@ const setPlayerGames = (playerId, ownership, games) => ({
   payload: { playerId, ownership, games },
 });
 
+const gamesFromResponse = (response, playerId) => {
+  var games = [];
+
+  parseString(response.data, function (err, _games) {
+    games = _games.items.item.map((x, index) => {
+      // console.log(`_games.items.item[${index}]=`, x);
+
+      let game = {
+        gameId: x.$.objectid,
+        playerId: playerId,
+        // name: x.name[0]._,
+        status: x.status[0].$,
+      };
+
+      //console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+
+      return game;
+    });
+  });
+
+  return games;
+};
+
 export const fetchPlayerGames = (player) => async (dispatch, getState) => {
   // Appel à l'api
   console.log("fetchPlayerGames", player.id, player.bggName);
 
-  var games;
+  var games = [];
   var ownership = [];
 
   // TODO check how we can get rid of "Access-Control-Allow-Origin" at https://www.html5rocks.com/en/tutorials/cors/
@@ -77,95 +100,93 @@ export const fetchPlayerGames = (player) => async (dispatch, getState) => {
   //   Your request for this collection has been accepted and will be processed.  Please try again later for access.
   //  </message>
 
-  try {
-    const response = await axios.get(
-      `https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`
-    );
-    parseString(response.data, function (err, _games) {
-      games = _games.items.item.map((x, index) => {
-        // console.log(`_games.items.item[${index}]=`, x);
+  await axios(
+    `https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`
+  )
+    .then(async function (response) {
+      if (response.code === 202) {
+        console.log("we should retry");
+      } else {
+        games = gamesFromResponse(response, player.id);
+      }
 
-        let game = {
-          gameId: x.$.objectid,
-          playerId: player.id,
-          // name: x.name[0]._,
-          status: x.status[0].$,
-        };
-
-        //console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
-
-        return game;
-      });
-    });
-    ownership = games.filter(uniqueId);
-
-    // Remove games already known to limit the fetch !
-
-    var existingIds = getState().bgg.games.map((game) => game.id);
-
-    var idsArray = ownership.map((o) => o.gameId);
-    idsArray = idsArray.filter(
-      (id) => existingIds.find((x) => x === id) === undefined
-    );
-
-    if (idsArray.length > 0) {
-      var idsQueryString = idsArray.reduce((acc, id) => acc + `${id},`, "");
-      idsQueryString = idsQueryString.slice(0, idsQueryString.length - 1);
-
-      const responseGame = await axios.get(
-        `https://www.boardgamegeek.com/xmlapi2/thing?id=${idsQueryString}`
+      const nextResponse = await axios.get(
+        `https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`
       );
-      parseString(responseGame.data, function (err, _games) {
-        //   console.log("_games=", _games);
-        // console.log("_games.items=", _games.items);
+      ownership = games.filter(uniqueId);
 
-        // TODO check x.$.type === 'boardgameexpansion'
+      // Remove games already known to limit the fetch !
 
-        games = _games.items.item.map((x, index) => {
-          // if (index === 0) {
-          // console.log(`_games.items.item[${index}]=`, x);
-          // }
+      var existingIds = getState().bgg.games.map((game) => game.id);
 
-          // if (x.$.id === "822") {
-          // console.log(`_games.items.item[${index}]=`, x);
-          // }
+      var idsArray = ownership.map((o) => o.gameId);
+      idsArray = idsArray.filter(
+        (id) => existingIds.find((x) => x === id) === undefined
+      );
 
-          let game = {
-            id: x.$.id,
-            type: x.$.type,
-            name: x.name[0].$.value,
-            minage: x.minage[0].$.value,
-            min: x.minplayers[0].$.value,
-            max: x.maxplayers[0].$.value,
-            minplaytime: x.minplaytime[0].$.value,
-            maxplaytime: x.maxplaytime[0].$.value,
-            playingtime: x.playingtime[0].$.value,
-            image: x.image[0],
-            thumbnail: x.thumbnail[0], // FIT IN 200x150
-            description: he.decode(x.description[0]),
-          };
+      if (idsArray.length > 0) {
+        var idsQueryString = idsArray.reduce((acc, id) => acc + `${id},`, "");
+        idsQueryString = idsQueryString.slice(0, idsQueryString.length - 1);
 
-          if (game.type === "boardgameexpansion") {
-            game.extends = x.link.reduce((accumulator, currentValue) => {
-              if (currentValue.$.type === "boardgameexpansion") {
-                accumulator.push(currentValue.$.id);
-              }
-              return accumulator;
-            }, []);
-          }
+        const responseGame = await axios.get(
+          `https://www.boardgamegeek.com/xmlapi2/thing?id=${idsQueryString}`
+        );
+        parseString(responseGame.data, function (err, _games) {
+          //   console.log("_games=", _games);
+          // console.log("_games.items=", _games.items);
 
-          // console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+          // TODO check x.$.type === 'boardgameexpansion'
 
-          return game;
+          games = _games.items.item.map((x, index) => {
+            // if (index === 0) {
+            // console.log(`_games.items.item[${index}]=`, x);
+            // }
+
+            // if (x.$.id === "822") {
+            // console.log(`_games.items.item[${index}]=`, x);
+            // }
+
+            let game = {
+              id: x.$.id,
+              type: x.$.type,
+              name: x.name[0].$.value,
+              minage: x.minage[0].$.value,
+              min: x.minplayers[0].$.value,
+              max: x.maxplayers[0].$.value,
+              minplaytime: x.minplaytime[0].$.value,
+              maxplaytime: x.maxplaytime[0].$.value,
+              playingtime: x.playingtime[0].$.value,
+              image: x.image[0],
+              thumbnail: x.thumbnail[0], // FIT IN 200x150
+              description: he.decode(x.description[0]),
+            };
+
+            if (game.type === "boardgameexpansion") {
+              game.extends = x.link.reduce((accumulator, currentValue) => {
+                if (currentValue.$.type === "boardgameexpansion") {
+                  accumulator.push(currentValue.$.id);
+                }
+                return accumulator;
+              }, []);
+            }
+
+            // console.log(`games[${index}]=`, JSON.stringify(game, null, 2));
+
+            return game;
+          });
+          return;
         });
-        return;
-      });
-    }
+      }
 
-    dispatch(setPlayerGames(player.id, ownership, games));
-  } catch (error) {
-    console.error(error);
-  }
+      dispatch(setPlayerGames(player.id, ownership, games));
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+      // setLoading(false);
+    });
 };
 
 function uniqueId(value, index, self) {

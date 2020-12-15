@@ -25,10 +25,10 @@ import Party from "./components/Party";
 import PartySelection from "./components/PartySelection";
 
 import Footer from "./components/Footer";
-import Games from "./components/Games";
+import PageGames from "./components/PageGames";
+
 import ModalGame from "./components/ModalGame";
 import Players from "./components/Players";
-import WishedGames from "./components/WishedGames";
 
 import { addPlayerToStore } from "./action";
 
@@ -116,7 +116,7 @@ const App = ({ addPlayerToStore }) => {
         <Container
           maxWidth="sm"
           style={{
-            backgroundColor: "#cfe8fc",
+            backgroundColor: "#aefefe",
             paddingBottom: "64px",
           }}
         >
@@ -127,7 +127,7 @@ const App = ({ addPlayerToStore }) => {
           {page === Page.Owners && (
             <>
               <Fab
-                color="primary"
+                color="secondary"
                 aria-label="add"
                 onClick={addPlayer}
                 className={classes.fab}
@@ -139,31 +139,14 @@ const App = ({ addPlayerToStore }) => {
             </>
           )}
 
-          {page === Page.Games && (
-            <Container style={{ backgroundColor: "#cf00fc" }}>
-              <div className="w3-col l8">
-                <span>TODO if more than one owner add a filter</span>
-              </div>
-              <div className="w3-col l8">
-                <span>tab for owned and wished games</span>
-              </div>
-
-              <div className="w3-col l8">
-                <Games />
-              </div>
-
-              <div className="w3-col l8">
-                <WishedGames />
-              </div>
-            </Container>
-          )}
+          {page === Page.Games && <PageGames />}
 
           {page === Page.Party && (
-            <Container style={{ backgroundColor: "#00e8fc" }}>
+            <>
               <Party />
               {/* <BestGame /> */}
               <PartySelection />
-            </Container>
+            </>
           )}
         </Container>
 

@@ -11,11 +11,9 @@ const useStyles = makeStyles((theme) =>
       marginBottom: theme.spacing(2),
     },
     players: {
-      "&:first-child": {
-        marginTop: theme.spacing(2),
-      },
       "&:last-child": {
-        color: "red",
+        // Pas terrible ! mais ça marche
+        marginTop: theme.spacing(2),
       },
     },
   })
