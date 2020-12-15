@@ -25,12 +25,12 @@ import { createSelector } from "reselect";
   Games related selectors
 
 */
-const gameIdsSelector = state =>
+const gameIdsSelector = (state) =>
   state.bgg.ownership
     .reduce((acc, o) => {
       if (o.status.own === "1") {
         // On exclu les extensions
-        let game = state.bgg.games.find(x => x.id === o.gameId);
+        let game = state.bgg.games.find((x) => x.id === o.gameId);
         if (game && !game.extends) {
           acc.push({ id: o.gameId, name: game.name });
         }
@@ -38,12 +38,40 @@ const gameIdsSelector = state =>
       return acc;
     }, [])
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map(game => game.id)
+    .map((game) => game.id)
     .filter(uniqueId);
 
-export const getGameIds = createSelector(gameIdsSelector, gameIds => gameIds);
+export const getGameIds = createSelector(gameIdsSelector, (gameIds) => gameIds);
 
-const wishedGameIdsSelector = state =>
+const filteredGameIdsSelector = (state, props) => {
+  return state.bgg.ownership
+    .reduce((acc, o) => {
+      if (
+        props.status === "-1" ||
+        (props.status === "0" && o.status.own === "1") ||
+        (props.status === "1" && o.status.wishlist === "1")
+      ) {
+        if (props.playerId === "0" || props.playerId === o.playerId) {
+          // On exclu les extensions
+          let game = state.bgg.games.find((x) => x.id === o.gameId);
+          if (game && !game.extends) {
+            acc.push({ id: o.gameId, name: game.name });
+          }
+        }
+      }
+      return acc;
+    }, [])
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((game) => game.id)
+    .filter(uniqueId);
+};
+
+export const getFilteredGameIds = createSelector(
+  filteredGameIdsSelector,
+  (gameIds) => gameIds
+);
+
+const wishedGameIdsSelector = (state) =>
   state.bgg.ownership.reduce((acc, o) => {
     if (o.status.own !== "1") {
       acc.push(o.gameId);
@@ -53,39 +81,44 @@ const wishedGameIdsSelector = state =>
 
 export const getWishedGameIds = createSelector(
   wishedGameIdsSelector,
-  gameIds => gameIds
+  (gameIds) => gameIds
 );
 
-const ownedGamesSelector = state =>
+const ownedGamesSelector = (state) =>
   state.bgg.ownership.reduce((acc, o) => {
     if (o.status.own === "1") {
       // On exclu les extensions
-      let game = state.bgg.games.find(x => x.id === o.gameId);
+      let game = state.bgg.games.find((x) => x.id === o.gameId);
       if (game && !game.extends) {
         acc.push({
           id: o.gameId,
           name: game.name,
           min: game.min,
           max: game.max,
-          minage: game.minage
+          minage: game.minage,
         });
       }
     }
     return acc;
   }, []);
 
-export const getOwnedGames = createSelector(ownedGamesSelector, games => games);
+export const getOwnedGames = createSelector(
+  ownedGamesSelector,
+  (games) => games
+);
 
 const extensionsSelector = (state, props) => {
   return state.bgg.games
-    .filter(x => x.extends && x.extends.find(y => y === props.id) !== undefined)
-    .map(z => {
+    .filter(
+      (x) => x.extends && x.extends.find((y) => y === props.id) !== undefined
+    )
+    .map((z) => {
       let extension = {
         id: z.id,
         name: z.name,
         min: z.min,
         max: z.max,
-        thumbnail: z.thumbnail
+        thumbnail: z.thumbnail,
       };
       return extension;
     });
@@ -97,7 +130,7 @@ const extensionsSelector = (state, props) => {
 
 */
 const gameRowDataSelector = (state, props) =>
-  state.bgg.games.find(x => x.id === props.id);
+  state.bgg.games.find((x) => x.id === props.id);
 
 export const getGameRowData = createSelector(
   gameRowDataSelector,
@@ -109,7 +142,7 @@ export const getGameRowData = createSelector(
       min: game.min,
       max: game.max,
       minAge: game.minage,
-      extensions
+      extensions,
     };
     return g;
   }
@@ -122,13 +155,13 @@ export const getGameRowData = createSelector(
 */
 
 const gameDataSelector = (state, props) =>
-  state.bgg.games.find(x => x.id === props.id);
+  state.bgg.games.find((x) => x.id === props.id);
 
 const ownersSelector = (state, props) => {
   var ownerIds = state.bgg.ownership
-    .filter(x => x.gameId === props.id && x.status.own === "1")
-    .map(z => z.playerId);
-  return state.bgg.players.filter(x => ownerIds.find(y => y === x.id));
+    .filter((x) => x.gameId === props.id && x.status.own === "1")
+    .map((z) => z.playerId);
+  return state.bgg.players.filter((x) => ownerIds.find((y) => y === x.id));
 };
 
 export const getGameData = createSelector(
@@ -149,7 +182,7 @@ export const getGameData = createSelector(
       description: game.description,
       extensions, // TODO map with More infos
       owners, // TODO map with less infos
-      extends: game.extends
+      extends: game.extends,
       // Extends
     };
     return g;
@@ -163,7 +196,7 @@ export const getGameData = createSelector(
   Sorted by ???
 */
 
-const partySelectionGameIdsSelector = state => {
+const partySelectionGameIdsSelector = (state) => {
   let nbPlayers = state.bgg.party.nbPlayers;
 
   let minAge = state.bgg.party.minAge;
@@ -172,7 +205,7 @@ const partySelectionGameIdsSelector = state => {
     state.bgg.ownership
       .reduce((acc, o) => {
         if (o.status.own === "1") {
-          let game = state.bgg.games.find(x => x.id === o.gameId);
+          let game = state.bgg.games.find((x) => x.id === o.gameId);
           if (
             game &&
             parseInt(game.min) <= nbPlayers &&
@@ -195,7 +228,7 @@ const partySelectionGameIdsSelector = state => {
 
 export const getPartySelectionGameIds = createSelector(
   partySelectionGameIdsSelector,
-  gameIds => gameIds
+  (gameIds) => gameIds
 );
 
 /*
@@ -210,7 +243,7 @@ const getNbPlayersSelector = (state, props) => {
 
 export const getNbPlayers = createSelector(
   getNbPlayersSelector,
-  nbPlayers => nbPlayers
+  (nbPlayers) => nbPlayers
 );
 
 const getMinimumAgeSelector = (state, props) => {
@@ -218,7 +251,7 @@ const getMinimumAgeSelector = (state, props) => {
 };
 export const getMinimumAge = createSelector(
   getMinimumAgeSelector,
-  minAge => minAge
+  (minAge) => minAge
 );
 
 /*

@@ -4,13 +4,57 @@ import { getGameData } from "../selectors";
 
 import { get_gravatar } from "../utils/Gravatar";
 
+import { Avatar, IconButton, Typography } from "@material-ui/core";
+
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+
+import CloseIcon from "@material-ui/icons/Close";
+
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    closeButton: {
+      color: theme.palette.secondary.main,
+    },
+    dialogTitleRoot: {
+      backgroundColor: theme.palette.primary.main,
+    },
+
+    dialogContent: {
+      backgroundColor: theme.palette.primary.light,
+    },
+
+    dialogActions: {
+      backgroundColor: theme.palette.primary.main,
+    },
+
+    dialogTitle: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      color: "white",
+    },
+
+    dialogTitleName: {
+      flexGrow: 1,
+      paddingLeft: theme.spacing(1),
+    },
+  })
+);
+
 const GameInModal = ({ id, game, setModalGameId }) => {
+  const classes = useStyles();
+
   if (!game) {
-    return (
-      <div className="w3-margin w3-card w3-yellow">
-        <h3>no game :(</h3>
-      </div>
-    );
+    return null;
+    // return (
+    //   <div className="w3-margin w3-card w3-yellow">
+    //     <h3>no game :(</h3>
+    //   </div>
+    // );
   }
 
   console.log(JSON.stringify(game, null, 2));
@@ -66,31 +110,38 @@ const GameInModal = ({ id, game, setModalGameId }) => {
   };
 
   return (
-    <React.Fragment>
-      <header className="w3-container w3-green">
-        <span
-          onClick={() => {
-            setModalGameId("0");
-          }}
-          className="w3-button w3-display-topright"
-        >
-          &times;
-        </span>
-        <h2>{game.name}</h2>
-      </header>
+    <>
+      <DialogTitle className={classes.dialogTitleRoot}>
+        <div className={classes.dialogTitle}>
+          <Avatar src={game.thumbnail} variant="rounded" />
+          <Typography variant="h6" className={classes.dialogTitleName}>
+            {game.name}
+          </Typography>
+          <IconButton
+            className={classes.closeButton}
+            onClick={() => {
+              setModalGameId("0");
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
+      </DialogTitle>
 
-      <div className="w3-padding w3-pale-green w3-bottombar w3-border-green w3-border">
-        <h4>
+      <DialogContent className={classes.dialogContent}>
+        <Typography variant="h6">
           <NbPlayers />
-        </h4>
-        <h4>Minimum age: {game.minage}</h4>
+        </Typography>
+        <Typography variant="h6">Minimum age: {game.minage}</Typography>
 
         <Owners />
 
-        <p style={{ whiteSpace: "pre-line" }}>{game.description}</p>
-      </div>
+        <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
+          {game.description}
+        </Typography>
+      </DialogContent>
 
-      <footer className="w3-container w3-green">
+      <DialogActions className={classes.dialogActions}>
         <p>
           <a href={"https://boardgamegeek.com/boardgame/" + id}>
             View on boardgamegeek.com
@@ -102,8 +153,8 @@ const GameInModal = ({ id, game, setModalGameId }) => {
             Melodice.org
           </a>
         </p>
-      </footer>
-    </React.Fragment>
+      </DialogActions>
+    </>
   );
 };
 

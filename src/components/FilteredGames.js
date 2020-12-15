@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getGameIds } from "../selectors";
+import { getFilteredGameIds } from "../selectors";
 
 import GamesFromIds from "../components/GamesFromIds";
 
@@ -9,9 +9,7 @@ function FilteredGames({ gameIds }) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("ownProps", ownProps);
-
-  return { gameIds: getGameIds(state) };
+  return { gameIds: getFilteredGameIds(state, ownProps) };
 };
 
 export default connect(mapStateToProps, null)(FilteredGames);

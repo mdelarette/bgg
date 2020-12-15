@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) =>
 const PageGames = ({ players }) => {
   const classes = useStyles();
 
-  const [selectedPlayerId, setSelectedPlayerId] = React.useState("");
-  const [filterStatus, setFilterStatus] = React.useState("");
+  const [selectedPlayerId, setSelectedPlayerId] = React.useState("0");
+  const [filterStatus, setFilterStatus] = React.useState("-1");
 
   return (
     <>
@@ -81,6 +81,9 @@ const PageGames = ({ players }) => {
             variant="filled"
             fullWidth
           >
+            <MenuItem key={"-1"} value={"-1"}>
+              {"All"}
+            </MenuItem>
             <MenuItem key={"0"} value={"0"}>
               {"Owned"}
             </MenuItem>

@@ -2,20 +2,17 @@ import React from "react";
 
 import { ModalContext } from "../contexts/modal-context.js";
 
+import { Dialog } from "@material-ui/core";
+
 import GameInModal from "./GameInModal";
 
 const ModalGame = () => {
   return (
     <ModalContext.Consumer>
       {({ modalGameId, setModalGameId }) => (
-        <div
-          className="w3-modal"
-          style={{ display: modalGameId === "0" ? "none" : "block" }}
-        >
-          <div className="w3-modal-content  w3-transparent">
-            <GameInModal id={modalGameId} setModalGameId={setModalGameId} />
-          </div>
-        </div>
+        <Dialog open={modalGameId !== "0"}>
+          <GameInModal id={modalGameId} setModalGameId={setModalGameId} />
+        </Dialog>
       )}
     </ModalContext.Consumer>
   );
