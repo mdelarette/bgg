@@ -52,8 +52,9 @@ const PageGames = ({ players }) => {
               setSelectedPlayerId(e.target.value);
             }}
             helperText="Please select your owner"
-            variant="filled"
+            variant="outlined"
             fullWidth
+            color="secondary"
           >
             <MenuItem key={"0"} value={"0"}>
               {"All"}
@@ -78,8 +79,9 @@ const PageGames = ({ players }) => {
               setFilterStatus(e.target.value);
             }}
             helperText="Please select games status"
-            variant="filled"
+            variant="outlined"
             fullWidth
+            color="secondary"
           >
             <MenuItem key={"-1"} value={"-1"}>
               {"All"}

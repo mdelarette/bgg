@@ -116,16 +116,17 @@ const App = ({ addPlayerToStore }) => {
         <Container
           maxWidth="sm"
           style={{
-            backgroundColor: "#aefefe",
+            // backgroundColor: "#aefefe",
             paddingBottom: "64px",
           }}
+          disableGutters
         >
           {page === Page.Home && (
             <Container style={{ backgroundColor: "#dddddd" }}>Home</Container>
           )}
 
           {page === Page.Owners && (
-            <>
+            <Container>
               <Fab
                 color="secondary"
                 aria-label="add"
@@ -136,7 +137,7 @@ const App = ({ addPlayerToStore }) => {
               </Fab>
 
               <Players />
-            </>
+            </Container>
           )}
 
           {page === Page.Games && <PageGames />}
