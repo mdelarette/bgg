@@ -2,10 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { getFilteredGameIds } from "../selectors";
 
+import TableGamesFromIds from "../components/TableGamesFromIds";
 import GamesFromIds from "../components/GamesFromIds";
 
 function FilteredGames({ gameIds }) {
-  return <GamesFromIds gameIds={gameIds} />;
+  return (
+    <>
+      <TableGamesFromIds gameIds={gameIds} />
+      <GamesFromIds gameIds={gameIds} />
+    </>
+  );
 }
 
 const mapStateToProps = (state, ownProps) => {

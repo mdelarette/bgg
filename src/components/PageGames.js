@@ -7,7 +7,7 @@ import WishedGames from "./WishedGames";
 import Games from "./Games";
 import FilteredGames from "./FilteredGames";
 
-import { TextField, MenuItem } from "@material-ui/core";
+import { TextField, MenuItem, Paper } from "@material-ui/core";
 
 // Status :
 // fortrade: "0"​​​​​
@@ -22,14 +22,14 @@ import { TextField, MenuItem } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    player: {
-      marginBottom: theme.spacing(2),
+    form: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+      padding: theme.spacing(1),
     },
-    players: {
-      "&:last-child": {
-        // Pas terrible ! mais ça marche
-        marginTop: theme.spacing(2),
-      },
+    formControl: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
   })
 );
@@ -42,59 +42,67 @@ const PageGames = ({ players }) => {
 
   return (
     <>
-      {players.length > 1 && (
-        <>
-          <TextField
-            select
-            label="Owner"
-            value={selectedPlayerId}
-            onChange={(e) => {
-              setSelectedPlayerId(e.target.value);
-            }}
-            helperText="Please select your owner"
-            variant="outlined"
-            fullWidth
-            color="secondary"
-          >
-            <MenuItem key={"0"} value={"0"}>
-              {"All"}
-            </MenuItem>
-            {players.map((player) => (
-              <MenuItem key={player.id} value={player.id}>
-                {player.name}
+      <Paper elevation={3} className={classes.form}>
+        {players.length > 1 && (
+          <>
+            <TextField
+              select
+              label="Owner"
+              value={selectedPlayerId}
+              onChange={(e) => {
+                setSelectedPlayerId(e.target.value);
+              }}
+              helperText="Please select your owner"
+              variant="outlined"
+              fullWidth
+              color="secondary"
+              className={classes.formControl}
+            >
+              <MenuItem key={"0"} value={"0"}>
+                {"All"}
               </MenuItem>
-            ))}
-          </TextField>
-        </>
-      )}
-      {players.length === 1 && <span>one owner no filter</span>}
+              {players.map((player) => (
+                <MenuItem key={player.id} value={player.id}>
+                  {player.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </>
+        )}
+        {players.length === 1 && <span>one owner no filter</span>}
+
+        {players.length > 0 && (
+          <>
+            <TextField
+              select
+              label="Status"
+              value={filterStatus}
+              onChange={(e) => {
+                setFilterStatus(e.target.value);
+              }}
+              helperText="Please select games status"
+              variant="outlined"
+              fullWidth
+              color="secondary"
+              className={classes.formControl}
+            >
+              <MenuItem key={"-1"} value={"-1"}>
+                {"All"}
+              </MenuItem>
+              <MenuItem key={"0"} value={"0"}>
+                {"Owned"}
+              </MenuItem>
+
+              <MenuItem key={"1"} value={"1"}>
+                {"Wished"}
+              </MenuItem>
+            </TextField>
+          </>
+        )}
+      </Paper>
 
       {players.length > 0 && (
         <>
-          <TextField
-            select
-            label="Status"
-            value={filterStatus}
-            onChange={(e) => {
-              setFilterStatus(e.target.value);
-            }}
-            helperText="Please select games status"
-            variant="outlined"
-            fullWidth
-            color="secondary"
-          >
-            <MenuItem key={"-1"} value={"-1"}>
-              {"All"}
-            </MenuItem>
-            <MenuItem key={"0"} value={"0"}>
-              {"Owned"}
-            </MenuItem>
-
-            <MenuItem key={"1"} value={"1"}>
-              {"Wished"}
-            </MenuItem>
-          </TextField>
-
           <FilteredGames playerId={selectedPlayerId} status={filterStatus} />
           {/* <Games />
           <WishedGames /> */}
