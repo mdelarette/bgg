@@ -6,12 +6,7 @@ import TableGamesFromIds from "../components/TableGamesFromIds";
 import GamesFromIds from "../components/GamesFromIds";
 
 function FilteredGames({ gameIds }) {
-  return (
-    <>
-      <TableGamesFromIds gameIds={gameIds} />
-      <GamesFromIds gameIds={gameIds} />
-    </>
-  );
+  return <TableGamesFromIds gameIds={gameIds} />;
 }
 
 const mapStateToProps = (state, ownProps) => {

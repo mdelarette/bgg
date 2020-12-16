@@ -72,7 +72,7 @@ const GameInModal = ({ id, game, setModalGameId }) => {
       return `Exactly ${game.min} players`;
     }
 
-    return `Number of players from ${game.min} to ${game.max}`;
+    return `Number of players : from ${game.min} to ${game.max}`;
   };
 
   const Owners = () => {

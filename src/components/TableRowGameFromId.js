@@ -4,8 +4,13 @@ import { connect } from "react-redux";
 import { getGameRowData } from "../selectors";
 import { getNbPlayers } from "../selectors";
 
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import Avatar from "@material-ui/core/Avatar";
+import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import Typography from "@material-ui/core/Typography";
 
 import { ModalContext } from "../contexts/modal-context.js";
 
@@ -13,7 +18,21 @@ TableRowGameFromId.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    avatarCell: {
+      display: "flex",
+      alignItems: "center",
+    },
+    gameName: {
+      paddingLeft: theme.spacing(1),
+    },
+  })
+);
+
 function TableRowGameFromId({ id, game, odd, nbPlayers }) {
+  const classes = useStyles();
+
   if (!game) {
     return null;
   }
@@ -42,8 +61,39 @@ function TableRowGameFromId({ id, game, odd, nbPlayers }) {
       {({ modalGameId, setModalGameId }) => (
         <React.Fragment>
           <TableRow key={id}>
-            <TableCell component="th" scope="row">
-              {game.name}
+            <TableCell
+              component="th"
+              scope="row"
+              className={classes.avatarCell}
+            >
+              <Avatar
+                src={game.thumbnail}
+                variant="rounded"
+                onClick={() => {
+                  setModalGameId(id);
+                }}
+              />
+
+              {game.extensions && game.extensions.length > 0 && (
+                <AvatarGroup>
+                  {game.extensions.map((extension, index) => {
+                    var elem = (
+                      <Avatar
+                        alt={extension.name}
+                        src={extension.thumbnail}
+                        onClick={() => {
+                          setModalGameId(extension.id);
+                        }}
+                      />
+                    );
+                    return elem;
+                  })}
+                </AvatarGroup>
+              )}
+
+              <Typography variant="h6" className={classes.gameName}>
+                {game.name}
+              </Typography>
             </TableCell>
             <TableCell align="right">{game.minAge}</TableCell>
             <TableCell align="right">{game.min}</TableCell>
