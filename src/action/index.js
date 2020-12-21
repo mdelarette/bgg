@@ -17,6 +17,17 @@ export const updatePartyToStore = (party) => {
   };
 };
 
+export const UPDATE_GAMES_FILTER = "UPDATE_GAMES_FILTER";
+export const updateGamesFilterToStore = (gamesFilter) => {
+  console.log("updateGamesFilterToStore !!!");
+  return {
+    type: UPDATE_GAMES_FILTER,
+    payload: {
+      gamesFilter,
+    },
+  };
+};
+
 export const ADD_PLAYER = "ADD_PLAYER";
 export const addPlayerToStore = (player) => {
   return {

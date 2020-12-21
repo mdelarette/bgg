@@ -20,6 +20,7 @@ import GamesIcon from "@material-ui/icons/Casino";
 import PartyIcon from "@material-ui/icons/SupervisedUserCircle";
 import AddIcon from "@material-ui/icons/Add";
 
+import Home from "./components/Home";
 import Party from "./components/Party";
 // import BestGame from "./components/BestGame";
 import PartySelection from "./components/PartySelection";
@@ -122,7 +123,9 @@ const App = ({ addPlayerToStore }) => {
           disableGutters
         >
           {page === Page.Home && (
-            <Container style={{ backgroundColor: "#dddddd" }}>Home</Container>
+            <div style={{ paddingTop: "8px" }}>
+              <Home />
+            </div>
           )}
 
           {page === Page.Owners && (
@@ -159,16 +162,28 @@ const App = ({ addPlayerToStore }) => {
         >
           <Toolbar>
             <div className={classes.grow} />
-            <IconButton color="inherit" onClick={() => setPage(Page.Home)}>
+            <IconButton
+              color={page === Page.Home ? "secondary" : "inherit"}
+              onClick={() => setPage(Page.Home)}
+            >
               <HomeIcon />
             </IconButton>
-            <IconButton color="inherit" onClick={() => setPage(Page.Owners)}>
+            <IconButton
+              color={page === Page.Owners ? "secondary" : "inherit"}
+              onClick={() => setPage(Page.Owners)}
+            >
               <OwnersIcon />
             </IconButton>
-            <IconButton color="inherit" onClick={() => setPage(Page.Games)}>
+            <IconButton
+              color={page === Page.Games ? "secondary" : "inherit"}
+              onClick={() => setPage(Page.Games)}
+            >
               <GamesIcon />
             </IconButton>
-            <IconButton color="inherit" onClick={() => setPage(Page.Party)}>
+            <IconButton
+              color={page === Page.Party ? "secondary" : "inherit"}
+              onClick={() => setPage(Page.Party)}
+            >
               <PartyIcon />
             </IconButton>
             <div className={classes.grow} />

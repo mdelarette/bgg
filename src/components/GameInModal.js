@@ -13,6 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
+import CardMedia from "@material-ui/core/CardMedia";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -140,6 +141,8 @@ const GameInModal = ({ id, game, setModalGameId }) => {
           {game.description}
         </Typography>
       </DialogContent>
+
+      <CardMedia image={game.thumbnail} title={game.name} />
 
       <DialogActions className={classes.dialogActions}>
         <p>

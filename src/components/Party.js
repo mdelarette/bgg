@@ -1,11 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+
 import { updatePartyToStore } from "../action";
 
-// Style input range : https://www.cssportal.com/style-input-range/
+import { TextField, MenuItem, Paper } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    form: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+      padding: theme.spacing(1),
+    },
+    formControl: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+  })
+);
 
 const Party = ({ party, updatePartyToStore }) => {
+  const classes = useStyles();
+
   const [nbPlayers, setNbPlayers] = React.useState(party.nbPlayers);
   const [minAge, setMinAge] = React.useState(party.minAge);
 
@@ -22,45 +40,44 @@ const Party = ({ party, updatePartyToStore }) => {
   }, [nbPlayers, minAge, updatePartyToStore]);
 
   return (
-    <div className="w3-margin-bottom">
-      <React.Fragment>
-        <div className="w3-container w3-orange">
-          <p>
-            <label>Number of players</label>
-            <input
-              className="w3-input"
-              type="number"
-              min="1"
-              name="nbPlayers"
-              value={nbPlayers}
-              onChange={e => setNbPlayers(e.target.value)}
-            />
-          </p>
+    <>
+      <Paper elevation={3} className={classes.form}>
+        <TextField
+          type="number"
+          label="Number of players"
+          value={nbPlayers}
+          onChange={(e) => setNbPlayers(e.target.value)}
+          helperText=""
+          variant="outlined"
+          fullWidth
+          color="secondary"
+          className={classes.formControl}
+        />
 
-          <p>
-            <label>Age</label>
-            <input
-              className="w3-input"
-              type="number"
-              name="age"
-              value={minAge}
-              onChange={e => setMinAge(e.target.value)}
-            />
-          </p>
-        </div>
-      </React.Fragment>
-    </div>
+        <TextField
+          type="number"
+          label="Age of youngest player"
+          value={minAge}
+          onChange={(e) => setMinAge(e.target.value)}
+          helperText=""
+          variant="outlined"
+          fullWidth
+          color="secondary"
+          className={classes.formControl}
+        />
+      </Paper>
+    </>
   );
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    party: state.bgg.party
+    party: state.bgg.party,
   };
 };
 
 const mapDispatchToProps = {
-  updatePartyToStore
+  updatePartyToStore,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Party);

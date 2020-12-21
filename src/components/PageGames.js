@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
-import WishedGames from "./WishedGames";
-import Games from "./Games";
+import { updateGamesFilterToStore } from "../action";
+
 import FilteredGames from "./FilteredGames";
 
 import { TextField, MenuItem, Paper } from "@material-ui/core";
@@ -34,11 +34,33 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PageGames = ({ players }) => {
+const PageGames = ({ players, gamesFilter, updateGamesFilterToStore }) => {
   const classes = useStyles();
 
-  const [selectedPlayerId, setSelectedPlayerId] = React.useState("0");
-  const [filterStatus, setFilterStatus] = React.useState("-1");
+  // const [selectedPlayerId, setSelectedPlayerId] = React.useState("0");
+  // const [filterStatus, setFilterStatus] = React.useState("-1");
+
+  const [selectedPlayerId, setSelectedPlayerId] = React.useState(
+    gamesFilter.selectedPlayerId
+  );
+  const [filterStatus, setFilterStatus] = React.useState(
+    gamesFilter.filterStatus
+  );
+
+  const firstUpdate = React.useRef(true);
+
+  React.useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    } else {
+      updateGamesFilterToStore({
+        selectedPlayerId: selectedPlayerId,
+        filterStatus: filterStatus,
+      });
+      return;
+    }
+  }, [selectedPlayerId, filterStatus, updateGamesFilterToStore]);
 
   return (
     <>
@@ -52,7 +74,7 @@ const PageGames = ({ players }) => {
               onChange={(e) => {
                 setSelectedPlayerId(e.target.value);
               }}
-              helperText="Please select your owner"
+              helperText=""
               variant="outlined"
               fullWidth
               color="secondary"
@@ -75,12 +97,12 @@ const PageGames = ({ players }) => {
           <>
             <TextField
               select
-              label="Status"
+              label="Game status"
               value={filterStatus}
               onChange={(e) => {
                 setFilterStatus(e.target.value);
               }}
-              helperText="Please select games status"
+              helperText=""
               variant="outlined"
               fullWidth
               color="secondary"
@@ -115,7 +137,12 @@ const PageGames = ({ players }) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     players: state.bgg.players,
+    gamesFilter: state.bgg.gamesFilter,
   };
 };
 
-export default connect(mapStateToProps, null)(PageGames);
+const mapDispatchToProps = {
+  updateGamesFilterToStore,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PageGames);
