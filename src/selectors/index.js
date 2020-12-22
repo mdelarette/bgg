@@ -176,6 +176,7 @@ export const getGameData = createSelector(
       // id: game.id,
       name: game.name,
       thumbnail: game.thumbnail,
+      image: game.image,
       min: game.min,
       max: game.max,
       minage: game.minage,

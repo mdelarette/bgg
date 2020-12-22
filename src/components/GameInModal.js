@@ -140,9 +140,13 @@ const GameInModal = ({ id, game, setModalGameId }) => {
         <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
           {game.description}
         </Typography>
-      </DialogContent>
 
-      <CardMedia image={game.thumbnail} title={game.name} />
+        <img
+          src={game.image}
+          alt={"image illustrating " + game.name}
+          width="100%"
+        />
+      </DialogContent>
 
       <DialogActions className={classes.dialogActions}>
         <p>
