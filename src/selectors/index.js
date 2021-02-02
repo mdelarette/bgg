@@ -200,7 +200,7 @@ export const getGameData = createSelector(
 const partySelectionGameIdsSelector = (state) => {
   let nbPlayers = state.bgg.party.nbPlayers;
 
-  let minAge = state.bgg.party.minAge;
+  let minAge = parseInt(state.bgg.party.minAge);
 
   return (
     state.bgg.ownership
@@ -211,9 +211,8 @@ const partySelectionGameIdsSelector = (state) => {
             game &&
             parseInt(game.min) <= nbPlayers &&
             nbPlayers <= parseInt(game.max) &&
-            minAge <= parseInt(game.minage)
+            minAge >= parseInt(game.minage)
           ) {
-            // TODO filter on age
             acc.push(o.gameId);
             if (o.extends && o.extends.length > 0) {
               acc.push(o.extends[0]);

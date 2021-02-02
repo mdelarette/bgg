@@ -11,6 +11,14 @@ import { frFR } from "@material-ui/core/locale";
 
 import { PersistGate } from "redux-persist/integration/react";
 
+import {
+  useQuery,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
 import App from "./App";
 import { store, persistor } from "./store/configure";
 import * as serviceWorker from "./serviceWorker";
@@ -45,14 +53,19 @@ const theme = createMuiTheme(
 
 // https://www.pantone.com/articles/color-of-the-year/color-of-the-year-2020
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
-  </MuiThemeProvider>,
+  <QueryClientProvider client={queryClient}>
+    <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </MuiThemeProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>,
   document.getElementById("root")
 );
 
