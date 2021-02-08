@@ -36,6 +36,13 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+const options = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+
 const Player = ({
   player,
   updatePlayerToStore,
@@ -95,7 +102,10 @@ const Player = ({
               </Button>
             }
           />
-          <CardContent>{player.age && <p>Age : {player.age}</p>}</CardContent>
+          <CardContent>
+            {player.age && <p>Age : {player.age}</p>}{" "}
+            {!!player.lastFetch && <p>Last fetch: {player.lastFetch}</p>}
+          </CardContent>
           <CardActions>
             <Button size="small" onClick={() => setEditMode(true)}>
               Edit

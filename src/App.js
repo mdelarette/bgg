@@ -96,7 +96,8 @@ const App = ({ addPlayerToStore }) => {
           bggName: "",
           age: testNewPlayer.dob.age,
           color: "blue",
-          fetched: false,
+          // fetched: false,
+          lastFetch: null,
           email: "",
           thumbnail: testNewPlayer.picture.thumbnail,
         };

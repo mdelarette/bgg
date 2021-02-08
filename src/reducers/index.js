@@ -14,12 +14,16 @@ const initialState = {
     {
       id: 1,
       bggName: "Bratac",
+      name: "Matthias",
       email: "bratac@free.fr",
+      lastFetch: null,
     },
     {
       id: 2,
       bggName: "Wallice35",
+      name: "Caroline",
       email: "wallice35@free.fr",
+      lastFetch: null,
     },
   ],
   ownership: [],
@@ -75,6 +79,10 @@ export default (state = initialState, action) => {
     case FETCH_PLAYER_GAMES:
       return produce(state, (draft) => {
         draft.games = draft.games.concat(action.payload.games);
+
+        draft.players = draft.players.map((x) =>
+          x.id !== action.payload.playerId ? x : { ...x, lastFetch: new Date() }
+        );
 
         draft.ownership = draft.ownership
           .filter((x) => x.playerId !== action.payload.playerId)
