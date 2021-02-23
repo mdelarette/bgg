@@ -151,6 +151,7 @@ const App = ({ addPlayerToStore }) => {
                 aria-label="add"
                 onClick={addPlayer}
                 className={classes.fab}
+                disabled={isFetching}
               >
                 <AddIcon />
               </Fab>

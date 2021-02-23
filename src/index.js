@@ -4,19 +4,11 @@ import { Provider } from "react-redux";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
-
 import { frFR } from "@material-ui/core/locale";
 
 import { PersistGate } from "redux-persist/integration/react";
 
-import {
-  useQuery,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import App from "./App";

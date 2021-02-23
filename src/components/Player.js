@@ -1,4 +1,3 @@
-// import React, { Component } from "react";
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -41,6 +40,9 @@ const options = {
   year: "numeric",
   month: "long",
   day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  second: "2-digit",
 };
 
 const Player = ({
@@ -105,6 +107,15 @@ const Player = ({
           <CardContent>
             {player.age && <p>Age : {player.age}</p>}{" "}
             {!!player.lastFetch && <p>Last fetch: {player.lastFetch}</p>}
+            {!!player.lastFetch && (
+              <p>
+                Last fetch:{" "}
+                {new Date(player.lastFetch).toLocaleDateString(
+                  "fr-FR",
+                  options
+                )}
+              </p>
+            )}
           </CardContent>
           <CardActions>
             <Button size="small" onClick={() => setEditMode(true)}>

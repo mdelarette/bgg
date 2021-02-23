@@ -40,6 +40,13 @@ const initialState = {
   },
 };
 
+// const options = {
+//   weekday: "long",
+//   year: "numeric",
+//   month: "long",
+//   day: "numeric",
+// };
+
 export default (state = initialState, action) => {
   // console.log("action.type=", action.type);
   // console.log("action.payload=", action.payload);
@@ -81,7 +88,12 @@ export default (state = initialState, action) => {
         draft.games = draft.games.concat(action.payload.games);
 
         draft.players = draft.players.map((x) =>
-          x.id !== action.payload.playerId ? x : { ...x, lastFetch: new Date() }
+          x.id !== action.payload.playerId
+            ? x
+            : {
+                ...x,
+                lastFetch: new Date().toString(),
+              }
         );
 
         draft.ownership = draft.ownership
