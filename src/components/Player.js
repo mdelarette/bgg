@@ -106,7 +106,6 @@ const Player = ({
           />
           <CardContent>
             {player.age && <p>Age : {player.age}</p>}{" "}
-            {!!player.lastFetch && <p>Last fetch: {player.lastFetch}</p>}
             {!!player.lastFetch && (
               <p>
                 Last fetch:{" "}
