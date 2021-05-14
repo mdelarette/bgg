@@ -52,6 +52,7 @@ const Party = ({ party, updatePartyToStore }) => {
           fullWidth
           color="secondary"
           className={classes.formControl}
+          inputProps={{ min: 1 }}
         />
 
         <TextField
@@ -64,6 +65,7 @@ const Party = ({ party, updatePartyToStore }) => {
           fullWidth
           color="secondary"
           className={classes.formControl}
+          inputProps={{ min: 0 }}
         />
       </Paper>
     </>

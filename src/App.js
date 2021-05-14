@@ -4,8 +4,8 @@ import { useQuery } from "react-query";
 
 import { connect } from "react-redux";
 
-import { useState, useEffect } from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { useState } from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -28,7 +28,6 @@ import Party from "./components/Party";
 // import BestGame from "./components/BestGame";
 import PartySelection from "./components/PartySelection";
 
-import Footer from "./components/Footer";
 import PageGames from "./components/PageGames";
 
 import ModalGame from "./components/ModalGame";
@@ -106,9 +105,9 @@ const App = ({ addPlayerToStore }) => {
   };
 
   const {
-    isLoading,
-    error,
-    data,
+    // isLoading,
+    // error,
+    // data,
     isFetching,
     refetch,
   } = useQuery("addingPlayer", fetchRandomUser, { enabled: false });
