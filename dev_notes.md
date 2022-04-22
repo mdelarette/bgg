@@ -27,12 +27,16 @@ Regularly lauch : npm audit
 Then npm audit fix if needed
 Commit with tag "npm audit fix"
 
+npm WARN {something} requires a peer of {other thing} but none is installed. You must install peer dependencies yourself.
+npm install --save-dev "{other thing}"
+
 
 ## OBSOLESCENCE
 
 npm outdated
 npm update [package_name]
 
+Update react to latest : npm install react@latest react-dom@latest react-redux@latest
 
 ## VERSIONNING
 

@@ -38,7 +38,8 @@ import { addPlayerToStore } from "./action";
 import { ModalContext } from "./contexts/modal-context.js";
 import { Page } from "./constants/pages";
 
-import { name, version } from "../package.json";
+// import { name, version } from "../package.json";
+import packageInfo from "../package.json";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -124,7 +125,7 @@ const App = ({ addPlayerToStore }) => {
         <AppBar id={"topBar"} position="static">
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
-              {`${name} - ${version}`}
+              {`${packageInfo.name} - ${packageInfo.version}`}
             </Typography>
           </Toolbar>
         </AppBar>
