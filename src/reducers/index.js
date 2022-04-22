@@ -47,7 +47,7 @@ const initialState = {
 //   day: "numeric",
 // };
 
-export default (state = initialState, action) => {
+const myReducer = (state = initialState, action) => {
   // console.log("action.type=", action.type);
   // console.log("action.payload=", action.payload);
 
@@ -105,3 +105,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default myReducer;
