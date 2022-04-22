@@ -1,21 +1,17 @@
 import { createRoot } from 'react-dom/client';
-// import ReactDOM from 'react-dom';
 
 import { Provider } from "react-redux";
 
-import { frFR } from '@mui/material/locale';
-import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles';
 
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 
-// import { ThemeProvider, createTheme, makeStyles  } from "@mui/material/styles";
-
-// import { frFR } from "@mui/material/locale";
 
 import { PersistGate } from "redux-persist/integration/react";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
+import theme from "./theme";
 import App from "./App";
 import { store, persistor } from "./store/configure";
 import * as serviceWorker from "./serviceWorker";
