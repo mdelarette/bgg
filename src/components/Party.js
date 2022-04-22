@@ -1,11 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 import { updatePartyToStore } from "../action";
 
-import { TextField, MenuItem, Paper } from "@material-ui/core";
+import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -40,35 +42,33 @@ const Party = ({ party, updatePartyToStore }) => {
   }, [nbPlayers, minAge, updatePartyToStore]);
 
   return (
-    <>
-      <Paper elevation={3} className={classes.form}>
-        <TextField
-          type="number"
-          label="Number of players"
-          value={nbPlayers}
-          onChange={(e) => setNbPlayers(e.target.value)}
-          helperText=""
-          variant="outlined"
-          fullWidth
-          color="secondary"
-          className={classes.formControl}
-          inputProps={{ min: 1 }}
-        />
+    <Paper elevation={3} className={classes.form}>
+      <TextField
+        type="number"
+        label="Number of players"
+        value={nbPlayers}
+        onChange={(e) => setNbPlayers(e.target.value)}
+        helperText=""
+        variant="outlined"
+        fullWidth
+        color="secondary"
+        className={classes.formControl}
+        inputProps={{ min: 1 }}
+      />
 
-        <TextField
-          type="number"
-          label="Age of youngest player"
-          value={minAge}
-          onChange={(e) => setMinAge(e.target.value)}
-          helperText=""
-          variant="outlined"
-          fullWidth
-          color="secondary"
-          className={classes.formControl}
-          inputProps={{ min: 0 }}
-        />
-      </Paper>
-    </>
+      <TextField
+        type="number"
+        label="Age of youngest player"
+        value={minAge}
+        onChange={(e) => setMinAge(e.target.value)}
+        helperText=""
+        variant="outlined"
+        fullWidth
+        color="secondary"
+        className={classes.formControl}
+        inputProps={{ min: 0 }}
+      />
+    </Paper>
   );
 };
 

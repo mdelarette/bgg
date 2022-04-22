@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Paper, Typography, Container } from "@material-ui/core";
+import { Paper, Typography, Container } from "@mui/material";
 
 const Home = () => {
   return (

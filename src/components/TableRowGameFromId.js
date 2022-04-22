@@ -4,13 +4,14 @@ import { connect } from "react-redux";
 import { getGameRowData } from "../selectors";
 import { getNbPlayers } from "../selectors";
 
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import Avatar from "@material-ui/core/Avatar";
-import AvatarGroup from "@material-ui/lab/AvatarGroup";
-import Typography from "@material-ui/core/Typography";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from '@mui/material/AvatarGroup';
+import Typography from "@mui/material/Typography";
 
 import { ModalContext } from "../contexts/modal-context.js";
 
@@ -65,6 +66,7 @@ function TableRowGameFromId({ id, game, odd, nbPlayers }) {
                         onClick={() => {
                           setModalGameId(extension.id);
                         }}
+                        key={extension.id}
                       />
                     );
                     return elem;

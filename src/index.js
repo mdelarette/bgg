@@ -1,10 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
+// import ReactDOM from 'react-dom';
+
 import { Provider } from "react-redux";
 
-import { ThemeProvider, createTheme, makeStyles  } from "@material-ui/core/styles";
+import { frFR } from '@mui/material/locale';
+import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles';
 
-import { frFR } from "@material-ui/core/locale";
+
+// import { ThemeProvider, createTheme, makeStyles  } from "@mui/material/styles";
+
+// import { frFR } from "@mui/material/locale";
 
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -27,45 +32,72 @@ import * as serviceWorker from "./serviceWorker";
 
 // White: #FFFFFF
 
-const theme = createTheme(
-  {
-    palette: {
-      primary: {
-        main: "#4D774E",
-        dark: "#164A41",
-        light: "#9DC88D",
-      },
-      secondary: {
-        main: "#F1B24A",
-      },
+// https://mui.com/material-ui/customization/theming/
+// https://bareynol.github.io/mui-theme-creator/
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#4D774E",
+      dark: "#164A41",
+      light: "#9DC88D",
+    },
+    secondary: {
+      main: "#F1B24A",
     },
   },
-  frFR
-);
+  components: {
+    // Name of the component
+    MuiAppBar: {
+        styleOverrides: {
+          root: {
+            // backgroundColor: "#4D0000", // ça fonctionne !
+          }
+        }
+    }
+  },
 
-const useStyles = makeStyles((theme) => {
-  root: {
-    // some CSS that access to theme
-  }
-});
+
+}, frFR);
+
 
 // https://www.pantone.com/articles/color-of-the-year/color-of-the-year-2020
 
 const queryClient = new QueryClient();
 
-ReactDOM.render(
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <App />
-        </PersistGate>
-      </Provider>
-    </ThemeProvider>
-    <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>,
-  document.getElementById("root")
+
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(
+<QueryClientProvider client={queryClient}>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
+        </Provider>
+      </ThemeProvider>
+    </StyledEngineProvider>
+  <ReactQueryDevtools initialIsOpen={false} />
+</QueryClientProvider>
 );
+
+
+// ReactDOM.render(
+//   <QueryClientProvider client={queryClient}>
+//     <StyledEngineProvider injectFirst>
+//       <ThemeProvider theme={theme}>
+//         <Provider store={store}>
+//           <PersistGate loading={null} persistor={persistor}>
+//             <App />
+//           </PersistGate>
+//         </Provider>
+//       </ThemeProvider>
+//     </StyledEngineProvider>
+//     <ReactQueryDevtools initialIsOpen={false} />
+//   </QueryClientProvider>,
+//   document.getElementById("root")
+// );
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

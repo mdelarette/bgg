@@ -2,7 +2,7 @@ import React from "react";
 
 import { ModalContext } from "../contexts/modal-context.js";
 
-import { Dialog } from "@material-ui/core";
+import { Dialog } from "@mui/material";
 
 import GameInModal from "./GameInModal";
 

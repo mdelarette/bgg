@@ -5,23 +5,24 @@ import { useQuery } from "react-query";
 import { connect } from "react-redux";
 
 import { useState } from "react";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
-import Container from "@material-ui/core/Container";
+import Container from "@mui/material/Container";
 
-import Fab from "@material-ui/core/Fab";
+import Fab from "@mui/material/Fab";
 
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 
-import HomeIcon from "@material-ui/icons/Home";
-import OwnersIcon from "@material-ui/icons/People";
-import GamesIcon from "@material-ui/icons/Casino";
-import PartyIcon from "@material-ui/icons/SupervisedUserCircle";
-import AddIcon from "@material-ui/icons/Add";
+import HomeIcon from "@mui/icons-material/Home";
+import OwnersIcon from "@mui/icons-material/People";
+import GamesIcon from "@mui/icons-material/Casino";
+import PartyIcon from "@mui/icons-material/SupervisedUserCircle";
+import AddIcon from "@mui/icons-material/Add";
 
 import Home from "./components/Home";
 import Party from "./components/Party";
@@ -182,25 +183,25 @@ const App = ({ addPlayerToStore }) => {
             <IconButton
               color={page === Page.Home ? "secondary" : "inherit"}
               onClick={() => setPage(Page.Home)}
-            >
+              size="large">
               <HomeIcon />
             </IconButton>
             <IconButton
               color={page === Page.Owners ? "secondary" : "inherit"}
               onClick={() => setPage(Page.Owners)}
-            >
+              size="large">
               <OwnersIcon />
             </IconButton>
             <IconButton
               color={page === Page.Games ? "secondary" : "inherit"}
               onClick={() => setPage(Page.Games)}
-            >
+              size="large">
               <GamesIcon />
             </IconButton>
             <IconButton
               color={page === Page.Party ? "secondary" : "inherit"}
               onClick={() => setPage(Page.Party)}
-            >
+              size="large">
               <PartyIcon />
             </IconButton>
             <div className={classes.grow} />

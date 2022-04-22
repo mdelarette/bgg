@@ -4,16 +4,17 @@ import { getGameData } from "../selectors";
 
 import { get_gravatar } from "../utils/Gravatar";
 
-import { Avatar, IconButton, Typography } from "@material-ui/core";
+import { Avatar, IconButton, Typography } from "@mui/material";
 
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
-import CloseIcon from "@material-ui/icons/Close";
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import CardMedia from "@material-ui/core/CardMedia";
+import CloseIcon from "@mui/icons-material/Close";
+
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -110,59 +111,57 @@ const GameInModal = ({ id, game, setModalGameId }) => {
     return "";
   };
 
-  return (
-    <>
-      <DialogTitle className={classes.dialogTitleRoot}>
-        <div className={classes.dialogTitle}>
-          <Avatar src={game.thumbnail} variant="rounded" />
-          <Typography variant="h6" className={classes.dialogTitleName}>
-            {game.name}
-          </Typography>
-          <IconButton
-            className={classes.closeButton}
-            onClick={() => {
-              setModalGameId("0");
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </div>
-      </DialogTitle>
-
-      <DialogContent className={classes.dialogContent}>
-        <Typography variant="h6">
-          <NbPlayers />
+  return <>
+    <DialogTitle className={classes.dialogTitleRoot}>
+      <div className={classes.dialogTitle}>
+        <Avatar src={game.thumbnail} variant="rounded" />
+        <Typography variant="h6" className={classes.dialogTitleName}>
+          {game.name}
         </Typography>
-        <Typography variant="h6">Minimum age: {game.minage}</Typography>
+        <IconButton
+          className={classes.closeButton}
+          onClick={() => {
+            setModalGameId("0");
+          }}
+          size="large">
+          <CloseIcon />
+        </IconButton>
+      </div>
+    </DialogTitle>
 
-        <Owners />
+    <DialogContent className={classes.dialogContent}>
+      <Typography variant="h6">
+        <NbPlayers />
+      </Typography>
+      <Typography variant="h6">Minimum age: {game.minage}</Typography>
 
-        <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
-          {game.description}
-        </Typography>
+      <Owners />
 
-        <img
-          src={game.image}
-          alt={"image illustrating " + game.name}
-          width="100%"
-        />
-      </DialogContent>
+      <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
+        {game.description}
+      </Typography>
 
-      <DialogActions className={classes.dialogActions}>
-        <p>
-          <a href={"https://boardgamegeek.com/boardgame/" + id}>
-            View on boardgamegeek.com
-          </a>
-        </p>
+      <img
+        src={game.image}
+        alt={"image illustrating " + game.name}
+        width="100%"
+      />
+    </DialogContent>
 
-        <p>
-          <a href={"https://melodice.org/playlist/" + game.name}>
-            Melodice.org
-          </a>
-        </p>
-      </DialogActions>
-    </>
-  );
+    <DialogActions className={classes.dialogActions}>
+      <p>
+        <a href={"https://boardgamegeek.com/boardgame/" + id}>
+          View on boardgamegeek.com
+        </a>
+      </p>
+
+      <p>
+        <a href={"https://melodice.org/playlist/" + game.name}>
+          Melodice.org
+        </a>
+      </p>
+    </DialogActions>
+  </>;
 };
 
 const mapStateToProps = (state, ownProps) => {
