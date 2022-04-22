@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme, makeStyles  } from "@material-ui/core/styles";
 
 import { frFR } from "@material-ui/core/locale";
 
@@ -27,7 +27,7 @@ import * as serviceWorker from "./serviceWorker";
 
 // White: #FFFFFF
 
-const theme = createMuiTheme(
+const theme = createTheme(
   {
     palette: {
       primary: {
@@ -43,19 +43,25 @@ const theme = createMuiTheme(
   frFR
 );
 
+const useStyles = makeStyles((theme) => {
+  root: {
+    // some CSS that access to theme
+  }
+});
+
 // https://www.pantone.com/articles/color-of-the-year/color-of-the-year-2020
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <App />
         </PersistGate>
       </Provider>
-    </MuiThemeProvider>
+    </ThemeProvider>
     <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>,
   document.getElementById("root")
