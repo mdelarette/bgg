@@ -23,32 +23,47 @@ import { createTheme } from '@mui/material/styles';
 // https://mui.com/material-ui/customization/default-theme/
 
 
-const theme = createTheme({
+let theme = createTheme({
     palette: {
-      primary: {
-        main: "#4D774E",
-        dark: "#164A41",
-        light: "#9DC88D",
-      },
-      secondary: {
-        main: "#F1B24A",
-      },
+        primary: {
+            main: "#4D774E",
+            dark: "#164A41",
+            light: "#9DC88D",
+        },
+        secondary: {
+            main: "#F1B24A",
+        },
     },
     components: {
-      // Name of the component
-      MuiAppBar: {
-          styleOverrides: {
-            root: {
-              // backgroundColor: "#4D0000", // ça fonctionne !
+        // Name of the component
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    // backgroundColor: "#4D0000", // ça fonctionne !
+                }
             }
-          }
-      }
+        }
     },
-  
-  }, frFR);
+
+}, frFR);
 
 
-  export default theme;
+// Réutilisation de couleur de la palette : 
+
+theme = createTheme(theme, {
+    components: {
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: theme.palette.primary.dark, // ça fonctionne !
+                }
+            }
+        }
+    }
+});
+
+
+export default theme;
 
 
 
