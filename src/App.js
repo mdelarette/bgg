@@ -25,6 +25,7 @@ const App = () => {
                 <Route path="/" element={<Layout />}>
 
                     <Route exact path="/bgg" element={<Home />} />
+                    <Route exact path="/bgg/index.html" element={<Home />} />
 
                     <Route exact path="/" element={<Home />} />
 
