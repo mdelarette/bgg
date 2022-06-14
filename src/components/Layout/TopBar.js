@@ -7,16 +7,19 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
 
+import Breakpoint from "../Breakpoint";
 
 const TopBar = () => {
     return (
         <>        
             <AppBar id={"topBar"} position="static">
-            <Toolbar>
-                <Typography variant="h6">
-                {`${packageInfo.name} - ${packageInfo.version}`}
-                </Typography>
-            </Toolbar>
+                <Toolbar>
+
+                        <Typography sx={{ flexGrow: 1 }} variant="h6">
+                            {`${packageInfo.name} - ${packageInfo.version}`}
+                        </Typography>
+                    <Breakpoint />
+                </Toolbar>
             </AppBar>        
         </>        
     )
