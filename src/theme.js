@@ -2,6 +2,8 @@
 import { frFR } from '@mui/material/locale';
 import { createTheme } from '@mui/material/styles';
 
+import { blueGrey } from '@mui/material/colors';
+
 
 // https://hookagency.com/website-color-schemes
 // 6. Greenery + Gradients Website Color Scheme 2021 by Anna Senkova
@@ -33,6 +35,11 @@ let theme = createTheme({
         secondary: {
             main: "#F1B24A",
         },
+        background: {
+            default: "#9DC88D",
+            //dark: deepOrange[900],
+            paper: blueGrey[50] //"#fff" // grey[50]
+        },
     },
     components: {
         // Name of the component
@@ -58,7 +65,24 @@ theme = createTheme(theme, {
                     backgroundColor: theme.palette.primary.dark, // ça fonctionne !
                 }
             }
-        }
+        },
+        MuiBottomNavigation: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: theme.palette.primary.dark, // ça fonctionne !
+                }
+            }
+        },
+        MuiBottomNavigationAction: {
+            styleOverrides: {
+                root: {
+                    // color: theme.palette.secondary.main,
+                    "&.Mui-selected": {
+                        color: theme.palette.secondary.main,
+                    }
+                }
+            }
+        },
     }
 });
 

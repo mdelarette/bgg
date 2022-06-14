@@ -115,8 +115,13 @@ export const fetchPlayerGames = (player) => async (dispatch, getState) => {
     `https://www.boardgamegeek.com/xmlapi2/collection?username=${player.bggName}`
   )
     .then(async function (response) {
+
+      console.log("response", response.code);
+
       if (response.code === 202) {
-        console.log("we should retry");
+        console.log("we should retry (202 - Accepted)");
+      } else if (response.code === 302) {
+        console.log("we should retry (302 - found))");
       } else {
         games = gamesFromResponse(response, player.id);
       }
