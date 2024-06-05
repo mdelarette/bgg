@@ -12,6 +12,10 @@ As seen here : https://doc.ubuntu-fr.org/nodejs
 Get the "node_modules"
     npm install
 
+npm i -g cross-env
+ npm i -g react-scripts
+ npm install -D typescript
+
 ## LAUNCH
 
 You can launch the app with :
