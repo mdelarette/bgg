@@ -1,5 +1,4 @@
-import { createRoot } from 'react-dom/client';
-
+import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 
 
@@ -20,21 +19,20 @@ import * as serviceWorker from "./serviceWorker";
 const queryClient = new QueryClient();
 
 
-const container = document.getElementById('root');
-const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(
-<QueryClientProvider client={queryClient}>
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <App />
-          </PersistGate>
-        </Provider>
-      </ThemeProvider>
-    </StyledEngineProvider>
-  <ReactQueryDevtools initialIsOpen={false} />
-</QueryClientProvider>
+ReactDOM.render(
+  <QueryClientProvider client={queryClient}>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <App />
+            </PersistGate>
+          </Provider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>,
+  document.getElementById('root')
 );
 
 
